@@ -5,10 +5,8 @@ name: CI
 # Controls when the action will run. Triggers the workflow on push or pull request
 # events but only for the branch-0.2 branch
 on:
-  push:
-    branches: [ branch-0.2 ]
-  pull_request:
-    branches: [ branch-0.2 ]
+  issue_comment:
+    types: [created]
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
@@ -16,6 +14,7 @@ jobs:
   build:
     # The type of runner that the job will run on
     runs-on: ubuntu-latest
+    if: github.event.comment.body == '/blossom-ci'
 
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
