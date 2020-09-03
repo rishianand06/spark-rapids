@@ -40,4 +40,4 @@ jobs:
             --detect.force.success=false 
             --detect.maven.build.command="-pl='$PROJECTS -am'"
             --detect.parallel.processors=0
-            --detect.project.version.name=${{ github.event.pull_request.head.sha }}
+            --detect.project.version.name="${{ github.event.pull_request.head.sha }}"
