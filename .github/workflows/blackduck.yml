@@ -39,3 +39,5 @@ jobs:
             --blackduck.api.token="${{ secrets.BLACKDUCK_API_TOKEN}}" 
             --detect.force.success=false 
             --detect.maven.build.command="-pl='$PROJECTS -am'"
+            --detect.parallel.processors=0
+            --detect.project.version.name=${{ github.event.pull_request.head.sha }}
