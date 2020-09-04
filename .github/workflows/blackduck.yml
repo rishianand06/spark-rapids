@@ -1,8 +1,6 @@
 name: blossom-ci
 on:
   push:
-    branches:
-      - branch-0.2
   issue_comment:
     types: [created]
   
