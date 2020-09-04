@@ -84,6 +84,7 @@ jobs:
             --detect.project.version.name="${{ fromJson(steps.pull_request_ref.outputs.data).head.ref }}"
              
   build:
+    needs: vulnerability-scan
     if: github.event.comment.body == '/blossom-ci'
     # The type of runner that the job will run on
     runs-on: [self-hosted, linux, blossom]
