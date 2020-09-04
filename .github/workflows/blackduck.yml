@@ -31,7 +31,9 @@ jobs:
           issue_id: ${{ github.event.issue.number }}
         env:
           GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
-  
+          
+      - run: "echo ravi ${{ fromJson(steps.get_pull_request_ref.outputs.data).head.ref }}"
+        
       - uses: actions/checkout@v2
         with:
           repository: ${{ github.event.pull_request.head.repo.full_name }} 
