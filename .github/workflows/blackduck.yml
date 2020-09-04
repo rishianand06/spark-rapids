@@ -7,12 +7,12 @@ on:
     types: [created]
   
 jobs:
-  vulnerability scan on default branch:
+  vulnerability-scan-default-branch:
     runs-on: ubuntu-latest
     steps:
       - run: "echo ${{ github.event_name }}"
           
-  vulnerability scan check & build:
+  vulnerability-scan-check-build:
     # trigger on pre-defined text
     if: github.event.comment.body == '/blossom-ci'
     runs-on: ubuntu-latest
