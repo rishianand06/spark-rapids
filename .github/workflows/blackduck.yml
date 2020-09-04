@@ -1,6 +1,6 @@
 # This is a basic workflow to help you get started with Actions
 
-name: CI
+name: blossom-ci
 
 # Controls when the action will run. Triggers the workflow on push or pull request
 # events but only for the branch-0.2 branch
@@ -12,18 +12,9 @@ on:
 jobs:
   security-check:
     runs-on: ubuntu-latest
-    steps:
-      - uses: octokit/request-action@v2.x
-        id: get_latest_release
-        with:
-          route: GET /repos/:repository/pulls
-          repository: ${{ github.repository }}
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      - run: "echo latest release: ${{ steps.get_latest_release.outputs.url }}"
-      
-      - name: get pull request ref
-        id: get_pull_request_ref
+    steps:      
+      - name: Get pull request ref
+        id: pull_request_ref
         uses: octokit/request-action@v2.x
         with:
           route: GET /repos/:repository/pulls/:issue_id
@@ -31,11 +22,32 @@ jobs:
           issue_id: ${{ github.event.issue.number }}
         env:
           GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
-          
-      - run: "echo ravi ${{ fromJson(steps.get_pull_request_ref.outputs.data).head.ref }}"
         
       - uses: actions/checkout@v2
         with:
-          repository: ${{ github.event.pull_request.head.repo.full_name }} 
-          ref: ${{ github.event.pull_request.head.sha }} 
+          repository: ${{ github.repository }}
+          ref: ${{ fromJson(steps.pull_request_ref.outputs.data).head.ref }}
           lfs: 'true'
+
+      - name: set java
+        uses: actions/setup-java@v1
+        with:
+          java-version: 1.8
+
+      - name: get projects 2
+        run: |
+          echo ::set-env name=projects::$(mvn -am dependency:tree | grep maven-dependency-plugin | awk '{ out="com.nvidia:"$(NF-1);print out }' | grep rapids | xargs | sed -e 's/ /,/g')
+      
+      - name: Synopsys Detect
+        uses: blackducksoftware/github-action@2.0.1
+        env:
+          PROJECTS: ${{ env.projects }}
+        with:
+          args: >
+            --blackduck.url="${{ secrets.BLACKDUCK_URL}}" 
+            --blackduck.api.token="${{ secrets.BLACKDUCK_API_TOKEN}}" 
+            --detect.force.success=false 
+            --detect.maven.build.command="-pl='$PROJECTS -am'"
+            --detect.parallel.processors=0
+            --detect.project.name="${{ github.repository }}"
+            --detect.project.version.name="${{ fromJson(steps.pull_request_ref.outputs.data).head.ref }}"
