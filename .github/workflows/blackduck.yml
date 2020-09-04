@@ -8,9 +8,14 @@ on:
   
 jobs:
   vulnerability-scan-default-branch:
+    if: github.event_name == 'push'
     runs-on: ubuntu-latest
     steps:
       - run: "echo ${{ github.event_name }}"
+      - name: Dump GitHub context
+        env:
+          GITHUB_CONTEXT: ${{ toJson(github) }}
+        run: echo "$GITHUB_CONTEXT"
           
   vulnerability-scan-check-build:
     # trigger on pre-defined text
