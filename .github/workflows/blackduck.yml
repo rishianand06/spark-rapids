@@ -5,7 +5,7 @@ on:
     types: [created]
 
 env:
-  trigger-text: '/blossom-ci'
+  trigger: /blossom-ci
   
 jobs: 
       
