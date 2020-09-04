@@ -3,9 +3,6 @@ on:
   push:
   issue_comment:
     types: [created]
-
-env:
-  trigger: /blossom-ci
   
 jobs: 
       
@@ -44,7 +41,7 @@ jobs:
           
   vulnerability-scan:
     # trigger on pre-defined text
-    if: github.event.comment.body == env.trigger
+    if: github.event.comment.body == '/blossom-ci'
     runs-on: ubuntu-latest
     steps:      
       - name: Get pull request ref
@@ -87,7 +84,7 @@ jobs:
             --detect.project.version.name="${{ fromJson(steps.pull_request_ref.outputs.data).head.ref }}"
              
   build:
-    if: github.event.comment.body == env.trigger
+    if: github.event.comment.body == '/blossom-ci'
     # The type of runner that the job will run on
     runs-on: [self-hosted, linux, blossom]
 
