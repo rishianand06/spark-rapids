@@ -13,6 +13,14 @@ jobs:
   security-check:
     runs-on: ubuntu-latest
     steps:
+      - uses: octokit/request-action@v2.x
+        id: get_latest_release
+        with:
+          route: GET /repos/:repository/pulls/4
+          repository: ${{ github.repository }}
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - run: "echo latest release: ${{ steps.get_latest_release.outputs.data }}"
       - uses: actions/checkout@v2
         with:
           repository: ${{ github.event.pull_request.head.repo.full_name }} 
