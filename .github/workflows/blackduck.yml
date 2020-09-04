@@ -9,11 +9,37 @@ jobs:
     if: github.event_name == 'push' && contains(github.event.ref, github.event.repository.default_branch)
     runs-on: ubuntu-latest
     steps:
-      - run: "echo ${{ github.event_name }}"
-      - name: Dump GitHub context
+      - uses: actions/checkout@v2
+        with:
+          repository: ${{ github.repository }}
+          ref: ${{ github.event.ref }}
+          lfs: 'true'
+      
+      - name: list files
+        run: ls -l
+          
+      - name: set java
+        uses: actions/setup-java@v1
+        with:
+          java-version: 1.8
+
+      - name: get projects 2
+        run: |
+          echo ::set-env name=projects::$(mvn -am dependency:tree | grep maven-dependency-plugin | awk '{ out="com.nvidia:"$(NF-1);print out }' | grep rapids | xargs | sed -e 's/ /,/g')
+      
+      - name: Synopsys Detect
+        uses: blackducksoftware/github-action@2.0.1
         env:
-          GITHUB_CONTEXT: ${{ toJson(github) }}
-        run: echo "$GITHUB_CONTEXT"
+          PROJECTS: ${{ env.projects }}
+        with:
+          args: >
+            --blackduck.url="${{ secrets.BLACKDUCK_URL}}" 
+            --blackduck.api.token="${{ secrets.BLACKDUCK_API_TOKEN}}" 
+            --detect.force.success=false 
+            --detect.maven.build.command="-pl='$PROJECTS -am'"
+            --detect.parallel.processors=0
+            --detect.project.name="${{ github.repository }}"
+            --detect.project.version.name="${{ fromJson(steps.pull_request_ref.outputs.data).head.ref }}"
           
   vulnerability-scan-check-build:
     # trigger on pre-defined text
