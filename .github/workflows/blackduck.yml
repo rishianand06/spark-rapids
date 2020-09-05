@@ -1,47 +1,21 @@
 name: blossom-ci
 on:
-  push:
   issue_comment:
     types: [created]
   
-jobs: 
-      
-  vulnerability-scan-default-branch:
-    if: github.event_name == 'push' && contains(github.event.ref, github.event.repository.default_branch)
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v2
-        with:
-          repository: ${{ github.repository }}
-          ref: ${{ github.event.ref }}
-          lfs: 'true'
-                   
-      - name: set java
-        uses: actions/setup-java@v1
-        with:
-          java-version: 1.8
-
-      - name: get projects 2
-        run: |
-          echo ::set-env name=projects::$(mvn -am dependency:tree | grep maven-dependency-plugin | awk '{ out="com.nvidia:"$(NF-1);print out }' | grep rapids | xargs | sed -e 's/ /,/g')
-      
-      - name: Synopsys Detect
-        uses: blackducksoftware/github-action@2.0.1
-        env:
-          PROJECTS: ${{ env.projects }}
-        with:
-          args: >
-            --blackduck.url="${{ secrets.BLACKDUCK_URL}}" 
-            --blackduck.api.token="${{ secrets.BLACKDUCK_API_TOKEN}}" 
-            --detect.force.success=false 
-            --detect.maven.build.command="-pl='$PROJECTS -am'"
-            --detect.parallel.processors=0
-            --detect.project.name="${{ github.repository }}"
-            --detect.project.version.name="BASE-MASTER"
-          
-  vulnerability-scan:
+jobs:          
+  authorization:
     # trigger on pre-defined text
     if: github.event.comment.body == '/blossom-ci'
+    runs-on: [self-hosted, linux, blossom]
+    steps:
+      - name: Check if comment writer is authorized person
+        run: blossom-ci
+        env:
+          OPERATION: 'AUTH'
+ 
+  vulnerability-scan-job:
+    needs: [authorization]
     runs-on: ubuntu-latest
     steps:      
       - name: Get pull request ref
@@ -54,22 +28,23 @@ jobs:
         env:
           GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
         
-      - uses: actions/checkout@v2
+      - name: Checkout code
+        uses: actions/checkout@v2
         with:
           repository: ${{ github.repository }}
           ref: ${{ fromJson(steps.pull_request_ref.outputs.data).head.ref }}
           lfs: 'true'
 
-      - name: set java
+      - name: Setup java
         uses: actions/setup-java@v1
         with:
           java-version: 1.8
 
-      - name: get projects 2
+      - name: Get project data (maven)
         run: |
           echo ::set-env name=projects::$(mvn -am dependency:tree | grep maven-dependency-plugin | awk '{ out="com.nvidia:"$(NF-1);print out }' | grep rapids | xargs | sed -e 's/ /,/g')
       
-      - name: Synopsys Detect
+      - name: Run synopsys detect
         uses: blackducksoftware/github-action@2.0.1
         env:
           PROJECTS: ${{ env.projects }}
@@ -82,20 +57,3 @@ jobs:
             --detect.parallel.processors=0
             --detect.project.name="${{ github.repository }}"
             --detect.project.version.name="${{ fromJson(steps.pull_request_ref.outputs.data).head.ref }}"
-             
-  build:
-    needs: vulnerability-scan
-    if: github.event.comment.body == '/blossom-ci'
-    # The type of runner that the job will run on
-    runs-on: [self-hosted, linux, blossom]
-
-    # Steps represent a sequence of tasks that will be executed as part of the job
-    steps:
-    # Runs a single command using the runners shell
-    - name: Start blossom ci
-      run: blossom-ci
-      env: 
-        CI_SERVER: ${{ secrets.CI_SERVER }}
-        REPO_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        BLACKDUCK_URL: ${{ secrets.BLACKDUCK_URL }}
-        BLACKDUCK_API_TOKEN: ${{ secrets.BLACKDUCK_API_TOKEN }}
