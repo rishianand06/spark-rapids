@@ -7,11 +7,12 @@ on:
 jobs:          
   authorization:
     # trigger on pre-defined text
+    runs-on: ubuntu-latest
     if: github.event.comment.body == '/blossom-test'
     steps:
       - name: Check if comment writer is authorized person
         id: foo
-        uses: actions/hello-world-composite-run-steps-action@v1
+        uses: ravitestgit/blossom-ci@master
         with:
           who-to-greet: 'Mona the Octocat'
       - run: echo random-number ${{ steps.foo.outputs.random-number }} 
