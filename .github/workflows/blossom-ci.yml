@@ -5,7 +5,7 @@ on:
     types: [created]
   
 jobs:          
-  authorization:
+  blossom-ci:
     # trigger on pre-defined text
     runs-on: [self-hosted, linux, blossom]
     if: github.event.comment.body == '/blossom-test'
