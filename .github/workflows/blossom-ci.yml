@@ -34,7 +34,7 @@ jobs:
          with:
            route: POST /repos/:repository/statuses/:sha
            repository: ${{ github.repository }}
-           sha: ${{ fromJson(steps.pull_request_ref.outputs.data).head.sha }}
+           sha: ${{ fromJson(steps.pull_request.outputs.data).head.sha }}
            state: "error"
            context: "blossom-ci"
            description : "failed"
