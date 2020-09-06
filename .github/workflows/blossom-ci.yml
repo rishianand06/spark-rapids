@@ -38,6 +38,6 @@ jobs:
            state: "error"
            context: "blossom-ci"
            description : "failed"
-           "target_url": ""
+           target_url: ""
          env:
            GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
