@@ -12,3 +12,32 @@ jobs:
     steps:
       - name: Run blossom ci
         run: blossom-ci
+        timeout-minutes: 20
+        continue-on-error: true
+ 
+  status-job:
+     needs: [blossom-ci]
+     runs-on: ubuntu-latest
+     steps:
+       - name: Get pull request
+         id: pull_request
+         uses: octokit/request-action@v2.x
+         with:
+           route: GET /repos/:repository/pulls/:issue_id
+           repository: ${{ github.repository }}
+           issue_id: ${{ github.event.issue.number }}
+         env:
+           GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
+           
+       - name: Update status
+         uses: octokit/request-action@v2.x
+         with:
+           route: POST /repos/:repository/statuses/:sha
+           repository: ${{ github.repository }}
+           sha: ${{ fromJson(steps.pull_request_ref.outputs.data).head.sha }}
+           state: "error"
+           context: "blossom-ci"
+           description : "failed"
+           "target_url": ""
+         env:
+           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
