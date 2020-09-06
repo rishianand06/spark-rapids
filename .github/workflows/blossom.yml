@@ -18,7 +18,8 @@ jobs:
   vulnerability-scan-job:
     needs: [authorization]
     runs-on: ubuntu-latest
-    steps:      
+    steps:
+      - run: printenv
       - name: Get pull request ref
         id: pull_request_ref
         uses: octokit/request-action@v2.x
