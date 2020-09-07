@@ -15,8 +15,3 @@ jobs:
         env: 
           CI_SERVER: ${{ secrets.CI_SERVER }}
           REPO_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          
-  vulnerability-scan-job:
-    runs-on: ubuntu-latest
-    steps:
-      - run: printenv
