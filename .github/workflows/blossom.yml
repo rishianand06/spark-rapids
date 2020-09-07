@@ -20,8 +20,8 @@ jobs:
     needs: [authorization]
     runs-on: ubuntu-latest
     steps:
-      - name: Get pull request ref
-        id: pull_request_ref
+      - name: Get pull request data
+        id: pull_request
         uses: octokit/request-action@v2.x
         with:
           route: GET /repos/:repository/pulls/:issue_id
@@ -34,7 +34,7 @@ jobs:
         uses: actions/checkout@v2
         with:
           repository: ${{ github.repository }}
-          ref: ${{ fromJson(steps.pull_request_ref.outputs.data).head.ref }}
+          ref: ${{ fromJson(steps.pull_request.outputs.data).head.ref }}
           lfs: 'true'
 
       - name: Setup java
@@ -61,4 +61,4 @@ jobs:
             --detect.maven.build.command="-pl='$PROJECTS -am'"
             --detect.parallel.processors=0
             --detect.project.name="${{ github.repository }}"
-            --detect.project.version.name="${{ fromJson(steps.pull_request_ref.outputs.data).head.ref }}"
+            --detect.project.version.name="${{ fromJson(steps.pull_request.outputs.data).head.ref }}"
