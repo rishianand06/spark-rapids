@@ -19,6 +19,7 @@ jobs:
     needs: [authorization]
     runs-on: ubuntu-latest
     steps:
+      - run: prinenv
       - name: Get pull request ref
         id: pull_request_ref
         uses: octokit/request-action@v2.x
