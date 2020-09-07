@@ -37,7 +37,7 @@ jobs:
           repository: ${{ github.repository }}
           sha: ${{ fromJson(steps.pull_request_data.outputs.data).head.sha }}
           state: "pending"
-          target_url: ""
+          target_url: "https://github.com/$GITHUB_REPOSITORY/actions/runs/$GITHUB_RUN_ID"
           description: "vulnerability scan started"
           context: "blossom-scan"
         env:
