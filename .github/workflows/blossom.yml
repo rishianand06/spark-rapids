@@ -48,9 +48,7 @@ jobs:
           echo ::set-env name=projects::$(mvn -am dependency:tree | grep maven-dependency-plugin | awk '{ out="com.nvidia:"$(NF-1);print out }' | grep rapids | xargs | sed -e 's/ /,/g')
       
       - name: Add mask
-        run: echo "::add-mask::nvidia.app.blackduck.com"
-      
-      - run: echo ${{ fromJson(steps.authorization_data.outputs.data).data1 }}
+        run: echo "::add-mask::${{ secrets.BLACKDUCK_URL }}"
       
       - name: Run synopsys detect
         uses: blackducksoftware/github-action@2.0.1
@@ -58,7 +56,7 @@ jobs:
           PROJECTS: ${{ env.projects }}
         with:
           args: >
-            --blackduck.url="${{ secrets.BLACKDUCK_URL }}" 
+            --blackduck.url="https://${{ secrets.BLACKDUCK_URL }}" 
             --blackduck.api.token="${{ secrets.BLACKDUCK_API_TOKEN }}" 
             --detect.force.success=false 
             --detect.maven.build.command="-pl='$PROJECTS -am'"
