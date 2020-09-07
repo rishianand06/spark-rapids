@@ -12,7 +12,6 @@ jobs:
     steps:
       - name: Check if comment writer is authorized person
         run: blossom-ci
-        id: authorization_data
         env:
           OPERATION: 'AUTH'
           VERSION: '1'
@@ -76,3 +75,13 @@ jobs:
             --detect.parallel.processors=0
             --detect.project.name="${{ github.repository }}"
             --detect.project.version.name="${{ fromJson(steps.pull_request_data.outputs.data).head.ref }}"
+             
+  vulnerability-scan-check:
+    needs: [vulnerability-scan-job]
+    runs-on: [self-hosted, linux, blossom]
+    steps:
+      - name: Check for new issue in vulnerability scan 
+        run: blossom-ci
+        env:
+          OPERATION: 'SCAN-CHECK'
+          VERSION: '1'
