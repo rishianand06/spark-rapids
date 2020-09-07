@@ -1,4 +1,4 @@
-# Make sure only few people can modify this file.
+# Before modifying this file, please check with blossom team
 name: blossom-ci
 on:
   issue_comment:
@@ -14,6 +14,7 @@ jobs:
         run: blossom-ci
         env:
           OPERATION: 'AUTH'
+          VERSION: '1'
  
   vulnerability-scan-job:
     needs: [authorization]
