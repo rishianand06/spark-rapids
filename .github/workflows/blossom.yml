@@ -63,6 +63,7 @@ jobs:
         run: echo "::add-mask::${{ secrets.BLACKDUCK_URL }}"
       
       - name: Run synopsys detect
+        id: scan_result
         uses: blackducksoftware/github-action@2.0.1
         env:
           PROJECTS: ${{ env.projects }}
@@ -74,7 +75,10 @@ jobs:
             --detect.maven.build.command="-pl='$PROJECTS -am'"
             --detect.parallel.processors=0
             --detect.project.name="${{ github.repository }}"
-            --detect.project.version.name="${{ fromJson(steps.pull_request_data.outputs.data).head.ref }}"
+            --detect.project.version.name="${{ fromJson(steps.pull_request_data.outputs.data).head.ref }}${{ github.run_id }}"
+       
+      - name: Find scan result url
+        run: echo steps.pull_request_data.outputs.data | grep -i "Black Duck Project BOM" 
              
   vulnerability-scan-check:
     needs: [vulnerability-scan-job]
