@@ -31,6 +31,19 @@ jobs:
         env:
           GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
         
+      - name: Update status
+        uses: octokit/request-action@v2.x
+        with:
+          route: POST /repos/:repository/statuses/:sha
+          repository: ${{ github.repository }}
+          sha: ${{ fromJson(steps.pull_request_data.outputs.data).head.sha }}
+          state: "pending"
+          target_url: ""
+          description: "vulnerability scan started"
+          context: "blossom-scan"
+        env:
+          GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
+          
       - name: Checkout code
         uses: actions/checkout@v2
         with:
