@@ -12,3 +12,6 @@ jobs:
     steps:
       - name: Run blossom ci
         run: blossom-ci
+        env: 
+          CI_SERVER: ${{ secrets.CI_SERVER }}
+          REPO_TOKEN: ${{ secrets.GITHUB_TOKEN }}
