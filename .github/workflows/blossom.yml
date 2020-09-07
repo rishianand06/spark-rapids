@@ -85,3 +85,5 @@ jobs:
         env:
           OPERATION: 'SCAN-CHECK'
           VERSION: '1'
+          BLACKDUCK_TOKEN: "${{ secrets.BLACKDUCK_API_TOKEN }}" 
+          BLACKDUCK_URL: "${{ secrets.BLACKDUCK_URL }}"
