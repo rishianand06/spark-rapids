@@ -78,7 +78,7 @@ jobs:
             --detect.project.version.name="${{ fromJson(steps.pull_request_data.outputs.data).head.ref }}${{ github.run_id }}"
        
       - name: Find scan result url
-        run: echo steps.pull_request_data.outputs.data | grep -i "Black Duck Project BOM" 
+        run: echo steps.scan_result.outputs.data | grep -i "Black Duck Project BOM" 
              
   vulnerability-scan-check:
     needs: [vulnerability-scan-job]
