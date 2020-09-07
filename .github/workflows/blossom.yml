@@ -8,7 +8,7 @@ jobs:
   vulnerability-scan-job1:
     runs-on: ubuntu-latest
     steps:
-      - run: prinenv
+      - run: printenv
   authorization:
     # trigger on pre-defined text
     if: github.event.comment.body == '/blossom-ci'
