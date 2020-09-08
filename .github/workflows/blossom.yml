@@ -81,7 +81,7 @@ jobs:
             --detect.maven.build.command="-pl='$PROJECTS -am'"
             --detect.parallel.processors=0
             --detect.project.name="${{ github.repository }}"
-            --detect.project.version.name="${{ steps.blackduck-project-version.outputs.data }}"
+            --detect.project.version.name="${{ fromJson(steps.pull_request_data.outputs.data).head.ref }}-${{ github.run_id }}"
              
   vulnerability-check-trigger:
     name: Vulnerability check & start ci job
