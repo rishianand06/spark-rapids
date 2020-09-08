@@ -31,6 +31,10 @@ jobs:
           issue_id: ${{ github.event.issue.number }}
         env:
           GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
+          
+      - name: Set blackduck project version
+        id: blackduck-project-version
+        run: echo "${{ fromJson(steps.pull_request_data.outputs.data).head.ref }}-${{ github.run_id }}"
         
       - name: Update status
         uses: octokit/request-action@v2.x
@@ -64,10 +68,6 @@ jobs:
       - name: Add mask
         run: echo "::add-mask::${{ secrets.BLACKDUCK_URL }}"
       
-      - name: Set blackduck project version
-        id: blackduck-project-version
-        run: echo "${{ fromJson(steps.pull_request_data.outputs.data).head.ref }}-${{ github.run_id }}"
-      
       - name: Run synopsys detect
         id: scan_result
         uses: blackducksoftware/github-action@2.0.1
@@ -81,7 +81,7 @@ jobs:
             --detect.maven.build.command="-pl='$PROJECTS -am'"
             --detect.parallel.processors=0
             --detect.project.name="${{ github.repository }}"
-            --detect.project.version.name="${{ fromJson(steps.pull_request_data.outputs.data).head.ref }}-${{ github.run_id }}"
+            --detect.project.version.name="${{ steps.blackduck-project-version.outputs.data }}"
              
   vulnerability-check-trigger:
     name: Vulnerability check & start ci job
