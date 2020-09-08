@@ -18,7 +18,7 @@ jobs:
           VERSION: '1'
  
   vulnerability-scan-job:
-    name: Run vulnerability scan job
+    name: Vulnerability scan job
     needs: [authorization]
     runs-on: ubuntu-latest
     steps:
@@ -80,7 +80,7 @@ jobs:
             --detect.project.version.name="${{ fromJson(steps.pull_request_data.outputs.data).head.ref }}-${{ github.run_id }}"
              
   vulnerability-check-trigger:
-    name: Check vulnerability scan result & trigger ci job
+    name: Vulnerability check & trigger CI job
     needs: [vulnerability-scan-job]
     runs-on: [self-hosted, linux, blossom]
     steps:
