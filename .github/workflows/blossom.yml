@@ -6,17 +6,19 @@ on:
   
 jobs:
   authorization:
+    name: Authorization
     # trigger on pre-defined text
     if: github.event.comment.body == '/blossom-ci'
     runs-on: [self-hosted, linux, blossom]
     steps:
-      - name: Check if comment writer is authorized person
+      - name: Check if comment is issued by authorized person
         run: blossom-ci
         env:
           OPERATION: 'AUTH'
           VERSION: '1'
  
   vulnerability-scan-job:
+    name: Run vulnerability scan job
     needs: [authorization]
     runs-on: ubuntu-latest
     steps:
@@ -75,16 +77,18 @@ jobs:
             --detect.maven.build.command="-pl='$PROJECTS -am'"
             --detect.parallel.processors=0
             --detect.project.name="${{ github.repository }}"
-            --detect.project.version.name="${{ fromJson(steps.pull_request_data.outputs.data).head.ref }}${{ github.run_id }}"
+            --detect.project.version.name="${{ fromJson(steps.pull_request_data.outputs.data).head.ref }}-${{ github.run_id }}"
              
-  vulnerability-scan-check:
+  vulnerability-check-trigger:
+    name: Check vulnerability scan result & trigger ci job
     needs: [vulnerability-scan-job]
     runs-on: [self-hosted, linux, blossom]
     steps:
-      - name: Check for new issue in vulnerability scan 
+      - name: Check for new issue in vulnerability scan & trigger ci job
         run: blossom-ci
         env:
           OPERATION: 'SCAN-CHECK'
           VERSION: '1'
           BLACKDUCK_TOKEN: "${{ secrets.BLACKDUCK_API_TOKEN }}" 
           BLACKDUCK_URL: "${{ secrets.BLACKDUCK_URL }}"
+          BLACKDUCK_PROJECT_VERSION: "${{ fromJson(steps.pull_request_data.outputs.data).head.ref }}-${{ github.run_id }}"
