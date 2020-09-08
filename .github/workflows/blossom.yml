@@ -95,4 +95,4 @@ jobs:
           VERSION: '1'
           BLACKDUCK_TOKEN: "${{ secrets.BLACKDUCK_API_TOKEN }}" 
           BLACKDUCK_URL: "${{ secrets.BLACKDUCK_URL }}"
-          BLACKDUCK_PROJECT_VERSION: "${{ steps.blackduck-project-version.outputs.data }}"
+          BLACKDUCK_PROJECT_VERSION: "ravitestgit-patch-2-244056955"
