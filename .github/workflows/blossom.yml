@@ -64,6 +64,10 @@ jobs:
       - name: Add mask
         run: echo "::add-mask::${{ secrets.BLACKDUCK_URL }}"
       
+      - name: Set blackduck project version
+        id: blackduck-project-version
+        run: echo "${{ fromJson(steps.pull_request_data.outputs.data).head.ref }}-${{ github.run_id }}"
+      
       - name: Run synopsys detect
         id: scan_result
         uses: blackducksoftware/github-action@2.0.1
@@ -91,4 +95,4 @@ jobs:
           VERSION: '1'
           BLACKDUCK_TOKEN: "${{ secrets.BLACKDUCK_API_TOKEN }}" 
           BLACKDUCK_URL: "${{ secrets.BLACKDUCK_URL }}"
-          BLACKDUCK_PROJECT_VERSION: "${{ fromJson(steps.pull_request_data.outputs.data).head.ref }}-${{ github.run_id }}"
+          BLACKDUCK_PROJECT_VERSION: "${{ steps.blackduck-project-version.outputs.data }}"
