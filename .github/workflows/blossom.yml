@@ -81,7 +81,7 @@ jobs:
             --detect.maven.build.command="-pl='$PROJECTS -am'"
             --detect.parallel.processors=0
             --detect.project.name="${{ github.repository }}"
-            --detect.project.version.name="${{ fromJson(steps.pull_request_data.outputs.data).head.ref }}-${{ github.run_id }}"
+            --detect.project.version.name="${{ github.run_id }}"
              
   vulnerability-check-trigger:
     name: Vulnerability check & start ci job
@@ -95,4 +95,4 @@ jobs:
           VERSION: '1'
           BLACKDUCK_TOKEN: "${{ secrets.BLACKDUCK_API_TOKEN }}" 
           BLACKDUCK_URL: "${{ secrets.BLACKDUCK_URL }}"
-          BLACKDUCK_PROJECT_VERSION: "ravitestgit-patch-2-244056955"
+          BLACKDUCK_PROJECT_VERSION: "${{ github.run_id }}"
