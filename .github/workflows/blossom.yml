@@ -91,7 +91,7 @@ jobs:
       - name: Check for new issue in vulnerability scan & start ci job
         run: blossom-ci
         env:
-          OPERATION: 'SCAN-CHECK-CI-START'
+          OPERATION: 'SCAN-CHECK-CI-JOB-START'
           VERSION: '1'
           BLACKDUCK_TOKEN: "${{ secrets.BLACKDUCK_API_TOKEN }}" 
           BLACKDUCK_URL: "${{ secrets.BLACKDUCK_URL }}"
