@@ -81,14 +81,14 @@ jobs:
             --detect.maven.build.command="-pl='$PROJECTS -am'"
             --detect.parallel.processors=0
             --detect.project.name="${{ github.repository }}"
-            --detect.project.version.name="${{ fromJson(steps.pull_request_data.outputs.data).head.ref }}-${{ github.run_id }}"
+            --detect.project.version.name="${{ steps.blackduck-project-version.outputs.data }}"
              
   vulnerability-check-trigger:
-    name: Vulnerability check & trigger CI job
+    name: Vulnerability check & start ci job
     needs: [vulnerability-scan-job]
     runs-on: [self-hosted, linux, blossom]
     steps:
-      - name: Check for new issue in vulnerability scan & trigger ci job
+      - name: Check for new issue in vulnerability scan & start ci job
         run: blossom-ci
         env:
           OPERATION: 'SCAN-CHECK'
