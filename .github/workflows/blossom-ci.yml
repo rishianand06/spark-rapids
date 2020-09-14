@@ -44,12 +44,14 @@ jobs:
           context: "blossom-ci"
         env:
           GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
-          
+      
       - name: Checkout code
         uses: actions/checkout@v2
         with:
-          repository: ${{ github.repository }}
-          ref: ${{ fromJson(steps.pull_request_data.outputs.data).merge_commit_sha }}
+          repository: ${{ fromJson(steps.pull_request_data.outputs.data).head.repo.full_name }}
+          # if 
+          # ref: ${{ fromJson(steps.pull_request_data.outputs.data).merge_commit_sha }}
+          ref: ${{ fromJson(steps.pull_request_data.outputs.data).head.sha }}
           lfs: 'true'
 
       - name: check files
