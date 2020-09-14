@@ -48,7 +48,8 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
         with:
-          repository: ${{ fromJson(steps.pull_request_data.outputs.data).head.repo.full_name }}
+          repository: ${{ github.repository }}
+          #repository: ${{ fromJson(steps.pull_request_data.outputs.data).head.repo.full_name }}
           # ref: ${{ fromJson(steps.pull_request_data.outputs.data).merge_commit_sha }}
           ref: ${{ fromJson(steps.pull_request_data.outputs.data).head.sha }}
           lfs: 'true'
