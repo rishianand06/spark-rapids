@@ -10,27 +10,9 @@ jobs:
     # trigger on pre-defined text
     if: github.event.comment.body == '/blossom-ci'
     runs-on: [self-hosted, linux, blossom]
-    defaults:
-      run:
-        shell: sh
     steps:
       - name: Check if comment is issued by authorized person
-        run: echo Hello
-        env:
-          OPERATION: 'AUTH'
-          VERSION: '1'
-         
-  authorization1:
-    name: Authorization1
-    defaults:
-      run:
-        shell: python
-    # trigger on pre-defined text
-    if: github.event.comment.body == '/blossom-ci'
-    runs-on: [self-hosted, linux, blossom]
-    steps:
-      - name: Check if comment is issued by authorized person
-        run: echo Hello
+        run: blossom-ci
         env:
           OPERATION: 'AUTH'
           VERSION: '1'
