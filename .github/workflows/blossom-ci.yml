@@ -12,7 +12,7 @@ jobs:
     runs-on: [self-hosted, linux, blossom]
     steps:
       - name: Check if comment is issued by authorized person
-        run: blossom-ci
+        run: echo Hello
         env:
           OPERATION: 'AUTH'
           VERSION: '1'
