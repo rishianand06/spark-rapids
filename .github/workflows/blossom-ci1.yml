@@ -1,5 +1,5 @@
 # Before modifying this file, please check with blossom team
-name: Blossom-CI
+name: Blossom-CI1
 on:
   issue_comment:
     types: [created]
