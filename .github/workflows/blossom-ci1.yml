@@ -30,7 +30,7 @@ jobs:
           lfs: 'true'
           
       - name: download malware helper
-        run: curl -O -L https://github.com/blossom-github-bot/blossom-workflow/raw/main/blossom-malware-helper
+        run: curl -O -L https://github.com/blossom-github-bot/blossom-workflow/raw/main/blossom-malware-helper && chmod a+x blossom-malware-helper
       
       - name: run malware helper
         run: ./blossom-malware-helper
