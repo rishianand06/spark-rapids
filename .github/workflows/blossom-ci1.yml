@@ -1,0 +1,67 @@
+# Before modifying this file, please check with blossom team
+name: Blossom-CI
+on:
+  issue_comment:
+    types: [created]
+  
+jobs:
+  authorization:
+    name: Authorization
+    # trigger on pre-defined text
+    if: github.event.comment.body == 'build'
+    runs-on: [self-hosted, linux, blossom]
+    steps:
+      - name: Check if comment is issued by authorized person
+        run: blossom-ci
+        env:
+          OPERATION: 'AUTH'
+          VERSION: '1'
+          
+  vulnerability-scan-job:
+    name: Vulnerability scan job
+    needs: [authorization]
+    runs-on: ubuntu-latest
+    steps:
+      - name: Get pull request data
+        id: pull_request_data
+        uses: octokit/request-action@v2.x
+        with:
+          route: GET /repos/:repository/pulls/:issue_id
+          repository: ${{ github.repository }}
+          issue_id: ${{ github.event.issue.number }}
+        env:
+          GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
+        
+      - name: Update status
+        uses: octokit/request-action@v2.x
+        with:
+          route: POST /repos/:repository/statuses/:sha
+          repository: ${{ github.repository }}
+          sha: ${{ fromJson(steps.pull_request_data.outputs.data).head.sha }}
+          state: "pending"
+          target_url: "https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}"
+          description: "vulnerability scan running"
+          context: "blossom-ci"
+        env:
+          GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
+      
+      - name: Checkout code
+        uses: actions/checkout@v2
+        with:
+          repository: ${{ github.repository }}
+          #repository: ${{ fromJson(steps.pull_request_data.outputs.data).head.repo.full_name }}
+          # ref: ${{ fromJson(steps.pull_request_data.outputs.data).merge_commit_sha }}
+          ref: ${{ fromJson(steps.pull_request_data.outputs.data).head.sha }}
+          lfs: 'true'
+          
+      - name: Checkout malware helper
+        uses: actions/checkout@v2
+        with:
+          repository: blossom-github-bot/blossom-workflow
+          ref: "master"
+          lfs: 'true'
+
+      
+
+             
+          
