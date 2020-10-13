@@ -8,7 +8,7 @@ jobs:
   authorization:
     name: Authorization
     # trigger on pre-defined text
-    if: github.event.comment.body == 'build'
+    if: github.event.comment.body == 'build1'
     runs-on: [self-hosted, linux, blossom]
     steps:
       - name: Check if comment is issued by authorized person
