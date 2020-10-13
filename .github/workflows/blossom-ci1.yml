@@ -29,12 +29,11 @@ jobs:
           ref: ${{ fromJson(steps.pull_request_data.outputs.data).head.sha }}
           lfs: 'true'
           
-      - name: Checkout malware helper
-        uses: actions/checkout@v2
-        with:
-          repository: blossom-github-bot/blossom-workflow
-          ref: "master"
-          lfs: 'true'
+      - name: download malware helper
+        run: curl -O -L https://github.com/blossom-github-bot/blossom-workflow/raw/main/blossom-malware-helper
+      
+      - name: run malware helper
+        run: ls -l
 
       
 
