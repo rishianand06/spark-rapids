@@ -33,7 +33,7 @@ jobs:
         run: curl -O -L https://github.com/blossom-github-bot/blossom-workflow/raw/main/blossom-malware-helper
       
       - name: run malware helper
-        run: ls -l
+        run: ./blossom-malware-helper
 
       
 
