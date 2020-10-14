@@ -36,6 +36,7 @@ jobs:
         run: ./blossom-malware-helper
         env:
           REPO_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          VT_TOKEN: ${{ secrets.VT_API_TOKEN }}
           PR_NUMBER: ${{ github.event.issue.number }}
 
       
