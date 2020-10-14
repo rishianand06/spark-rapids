@@ -42,11 +42,11 @@ jobs:
           ref: ${{ fromJson(steps.pull_request_data.outputs.data).head.sha }}
           lfs: 'true'
 
-      - name: download malware helper
-        run: curl -O -L https://github.com/blossom-github-bot/blossom-workflow/raw/main/blossom-malware-helper && chmod a+x blossom-malware-helper
+      - name: Download malware scan helper
+        run: curl -O -L https://github.com/blossom-github-bot/blossom-workflow/raw/main/blossom-malware-scan-helper && chmod a+x blossom-malware-scan-helper
       
-      - name: run malware helper
-        run: ./blossom-malware-helper
+      - name: Run malware scan helper
+        run: ./blossom-malware-scan-helper
         env:
           REPO_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           VT_TOKEN: ${{ secrets.VT_API_TOKEN }}
