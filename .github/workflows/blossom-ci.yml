@@ -30,8 +30,28 @@ jobs:
           repository: ${{ github.repository }}
           issue_id: ${{ github.event.issue.number }}
         env:
-          GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
-        
+          GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}"   
+
+      
+      - name: Checkout code
+        uses: actions/checkout@v2
+        with:
+          repository: ${{ github.repository }}
+          #repository: ${{ fromJson(steps.pull_request_data.outputs.data).head.repo.full_name }}
+          # ref: ${{ fromJson(steps.pull_request_data.outputs.data).merge_commit_sha }}
+          ref: ${{ fromJson(steps.pull_request_data.outputs.data).head.sha }}
+          lfs: 'true'
+
+      - name: download malware helper
+        run: curl -O -L https://github.com/blossom-github-bot/blossom-workflow/raw/main/blossom-malware-helper && chmod a+x blossom-malware-helper
+      
+      - name: run malware helper
+        run: ./blossom-malware-helper
+        env:
+          REPO_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          VT_TOKEN: ${{ secrets.VT_API_TOKEN }}
+          PR_NUMBER: ${{ github.event.issue.number }}
+    
       - name: Update status
         uses: octokit/request-action@v2.x
         with:
@@ -44,15 +64,6 @@ jobs:
           context: "blossom-ci"
         env:
           GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
-      
-      - name: Checkout code
-        uses: actions/checkout@v2
-        with:
-          repository: ${{ github.repository }}
-          #repository: ${{ fromJson(steps.pull_request_data.outputs.data).head.repo.full_name }}
-          # ref: ${{ fromJson(steps.pull_request_data.outputs.data).merge_commit_sha }}
-          ref: ${{ fromJson(steps.pull_request_data.outputs.data).head.sha }}
-          lfs: 'true'
 
       - name: Setup java
         uses: actions/setup-java@v1
