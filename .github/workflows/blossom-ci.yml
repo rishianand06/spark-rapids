@@ -41,16 +41,6 @@ jobs:
           # ref: ${{ fromJson(steps.pull_request_data.outputs.data).merge_commit_sha }}
           ref: ${{ fromJson(steps.pull_request_data.outputs.data).head.sha }}
           lfs: 'true'
-
-      - name: Download malware scan helper
-        run: curl -O -L https://github.com/blossom-github-bot/blossom-workflow/raw/main/blossom-malware-scan-helper && chmod a+x blossom-malware-scan-helper
-      
-      - name: Run malware scan helper
-        run: ./blossom-malware-scan-helper
-        env:
-          REPO_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          VT_TOKEN: ${{ secrets.VT_API_TOKEN }}
-          PR_NUMBER: ${{ github.event.issue.number }}
     
       - name: Update status
         uses: octokit/request-action@v2.x
