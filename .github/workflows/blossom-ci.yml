@@ -40,7 +40,6 @@ jobs:
         with:
             name: my-artifact
             path: world.txt
-            debug: true
    
       - name: Checkout code
         uses: actions/checkout@v2
