@@ -46,16 +46,14 @@ jobs:
             console.log(result.data)
             return result.data
         
-      - name: Get result
-        run: echo ${{ steps.pull_request_data.outputs.result }}
-      
+     
       - name: Checkout code
         uses: actions/checkout@v2
         with:
           repository: ${{ github.repository }}
           #repository: ${{ fromJson(steps.pull_request_data.outputs.data).head.repo.full_name }}
           # ref: ${{ fromJson(steps.pull_request_data.outputs.data).merge_commit_sha }}
-          ref: ${{ fromJson(steps.pull_request_data.outputs.data).head.sha }}
+          ref: ${{ fromJson(steps.pull_request_data.outputs.result).head.sha }}
           lfs: 'true'
     
       - name: Update status
