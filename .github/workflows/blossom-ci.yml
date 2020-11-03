@@ -61,7 +61,7 @@ jobs:
         with:
           route: POST /repos/:repository/statuses/:sha
           repository: ${{ github.repository }}
-          sha: ${{ fromJson(steps.pull_request_data.outputs.data).head.sha }}
+          sha: ${{ fromJson(steps.pull_request_data.outputs.result).head.sha }}
           state: "pending"
           target_url: "https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}"
           description: "vulnerability scan running"
