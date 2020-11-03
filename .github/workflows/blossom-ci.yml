@@ -33,9 +33,15 @@ jobs:
             repo: context.repo.repo,
             pull_number: context.issue.number})
             return result.data     
-      - name: print data
-        run: printenv   
-     
+            
+          
+      - run: echo hello > world.txt
+      - uses: actions/upload-artifact@v2
+        with:
+            name: my-artifact
+            path: world.txt
+            debug: true
+   
       - name: Checkout code
         uses: actions/checkout@v2
         with:
