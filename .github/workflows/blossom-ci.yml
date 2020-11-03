@@ -51,10 +51,10 @@ jobs:
             await github.request('POST /repos/{owner}/{repo}/statuses/{sha}', {
             owner: context.repo.owner,
             repo: context.repo.repo,
-            sha: ${{ fromJson(steps.pull_request_data.outputs.result).head.sha }}
-            state: "pending"
-            target_url: "https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}"
-            description: "vulnerability scan running"
+            sha: ${{ fromJson(steps.pull_request_data.outputs.result).head.sha }},
+            state: "pending",
+            target_url: "https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}",
+            description: "vulnerability scan running",
             context: "blossom-ci"})
 
       - name: Setup java
