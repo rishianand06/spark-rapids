@@ -39,12 +39,11 @@ jobs:
         with:
           github-token: ${{secrets.GITHUB_TOKEN}}
           script: |
-            github.pulls.get({
-              issue_number: context.issue.number,
-              owner: context.repo.owner,
-              repo: context.repo.repo
+            await octokit.request('GET /repos/{owner}/{repo}/pulls/{pull_number}', {
+            owner: context.repo.owner,
+            repo: context.repo.repo,
+            pull_number: context.issue.number
             })
-
       
       - name: Checkout code
         uses: actions/checkout@v2
