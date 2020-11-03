@@ -32,7 +32,9 @@ jobs:
             owner: context.repo.owner,
             repo: context.repo.repo,
             pull_number: context.issue.number})
-            return result.data        
+            return result.data     
+      - name: print data
+        run: printenv   
      
       - name: Checkout code
         uses: actions/checkout@v2
