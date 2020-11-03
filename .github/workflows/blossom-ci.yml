@@ -44,9 +44,6 @@ jobs:
             repo: context.repo.repo,
             pull_number: context.issue.number})
             return result
-            
-      - name: print data
-        run: echo ${{ fromJson(steps.pull_request_data.outputs.data) }}
       
       - name: Checkout code
         uses: actions/checkout@v2
