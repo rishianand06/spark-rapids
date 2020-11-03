@@ -23,17 +23,6 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Get pull request data
-        id: pull_request_data1
-        uses: octokit/request-action@v2.x
-        with:
-          route: GET /repos/:repository/pulls/:issue_id
-          repository: ${{ github.repository }}
-          issue_id: ${{ github.event.issue.number }}
-        env:
-          GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}"   
-          
-          
-      - name: Get pull request data
         id: pull_request_data
         uses: actions/github-script@v3
         with:
@@ -43,16 +32,14 @@ jobs:
             owner: context.repo.owner,
             repo: context.repo.repo,
             pull_number: context.issue.number})
-            console.log(result.data)
-            return result.data
-        
+            return result.data        
      
       - name: Checkout code
         uses: actions/checkout@v2
         with:
           repository: ${{ github.repository }}
-          #repository: ${{ fromJson(steps.pull_request_data.outputs.data).head.repo.full_name }}
-          # ref: ${{ fromJson(steps.pull_request_data.outputs.data).merge_commit_sha }}
+          #repository: ${{ fromJson(steps.pull_request_data.outputs.result).head.repo.full_name }}
+          # ref: ${{ fromJson(steps.pull_request_data.outputs.result).merge_commit_sha }}
           ref: ${{ fromJson(steps.pull_request_data.outputs.result).head.sha }}
           lfs: 'true'
     
