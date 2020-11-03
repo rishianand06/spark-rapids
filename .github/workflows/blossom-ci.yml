@@ -39,14 +39,15 @@ jobs:
         with:
           github-token: ${{secrets.GITHUB_TOKEN}}
           script: |
-            const data = await github.request('GET /repos/{owner}/{repo}/pulls/{pull_number}', {
+            const result = await github.request('GET /repos/{owner}/{repo}/pulls/{pull_number}', {
             owner: context.repo.owner,
             repo: context.repo.repo,
             pull_number: context.issue.number})
-            console.log(data)
+            console.log(result.data)
+            return result.data
         
       - name: Get result
-        run: echo "${{ fromJson(steps.pull_request_data.outputs.result).result }}"
+        run: echo "${{ steps.pull_request_data.outputs.result }}"
       
       - name: Checkout code
         uses: actions/checkout@v2
