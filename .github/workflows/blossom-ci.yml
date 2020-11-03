@@ -60,13 +60,6 @@ jobs:
         uses: actions/setup-java@v1
         with:
           java-version: 1.8
-      
-      - run: echo hello > world.txt
-      
-      - uses: actions/upload-artifact@v2
-        with:
-            name: my-artifact
-            path: world.txt
 
       - name: Get project data (maven)
         run: |
