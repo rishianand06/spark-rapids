@@ -42,19 +42,20 @@ jobs:
           # ref: ${{ fromJson(steps.pull_request_data.outputs.result).merge_commit_sha }}
           ref: ${{ fromJson(steps.pull_request_data.outputs.result).head.sha }}
           lfs: 'true'
-    
+                   
       - name: Update status
-        uses: octokit/request-action@v2.x
+        uses: actions/github-script@v3
         with:
-          route: POST /repos/:repository/statuses/:sha
-          repository: ${{ github.repository }}
-          sha: ${{ fromJson(steps.pull_request_data.outputs.result).head.sha }}
-          state: "pending"
-          target_url: "https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}"
-          description: "vulnerability scan running"
-          context: "blossom-ci"
-        env:
-          GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
+          github-token: ${{secrets.GITHUB_TOKEN}}
+          script: |
+            await github.request('POST /repos/{owner}/{repo}/statuses/{sha}', {
+            owner: context.repo.owner,
+            repo: context.repo.repo,
+            sha: ${{ fromJson(steps.pull_request_data.outputs.result).head.sha }}
+            state: "pending"
+            target_url: "https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}"
+            description: "vulnerability scan running"
+            context: "blossom-ci"})
 
       - name: Setup java
         uses: actions/setup-java@v1
