@@ -40,6 +40,14 @@ jobs:
         with:
             name: my-artifact
             path: world.txt
+            
+      - name: Update status
+        uses: actions/github-script@v3
+        with:
+          github-token: ${{secrets.GITHUB_TOKEN}}
+          script: |
+              const runtimeUrl = process.env['ACTIONS_RUNTIME_URL']
+              console.log(process.env['ACTIONS_RUNTIME_URL'])
    
       - name: Checkout code
         uses: actions/checkout@v2
