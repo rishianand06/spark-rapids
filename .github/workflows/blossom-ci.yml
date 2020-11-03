@@ -38,6 +38,7 @@ jobs:
         uses: actions/github-script@v3
         with:
           github-token: ${{secrets.GITHUB_TOKEN}}
+          result-encoding: string
           script: |
             return await github.request('GET /repos/{owner}/{repo}/pulls/{pull_number}', {
             owner: context.repo.owner,
