@@ -39,7 +39,7 @@ jobs:
         with:
           github-token: ${{secrets.GITHUB_TOKEN}}
           script: |
-            const data await github.request('GET /repos/{owner}/{repo}/pulls/{pull_number}', {
+            const data = await github.request('GET /repos/{owner}/{repo}/pulls/{pull_number}', {
             owner: context.repo.owner,
             repo: context.repo.repo,
             pull_number: context.issue.number})
