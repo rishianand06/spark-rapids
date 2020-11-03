@@ -38,7 +38,6 @@ jobs:
         uses: actions/github-script@v3
         with:
           github-token: ${{secrets.GITHUB_TOKEN}}
-          result-encoding: string
           script: |
             return await github.request('GET /repos/{owner}/{repo}/pulls/{pull_number}', {
             owner: context.repo.owner,
@@ -46,7 +45,7 @@ jobs:
             pull_number: context.issue.number})
         
       - name: Get result
-        run: echo "${{ fromJson(steps.pull_request_data.outputs.result).data }}"
+        run: echo "${{ fromJson(steps.pull_request_data.outputs.result) }}"
       
       - name: Checkout code
         uses: actions/checkout@v2
