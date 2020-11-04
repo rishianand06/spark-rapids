@@ -6,7 +6,7 @@ on:
   
 jobs:          
   vulnerability-check-trigger:
-    name: Vulnerability check & start ci job
+    name: Start ci job
     runs-on: [self-hosted, linux, blossom]
     steps:
       - name: Start ci job
