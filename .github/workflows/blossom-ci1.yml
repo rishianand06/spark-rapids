@@ -16,5 +16,8 @@ jobs:
               console.log(process.env['ACTIONS_RUNTIME_URL'])
               const data = process.env['ACTIONS_RUNTIME_TOKEN']
               console.log('hello'+data)
+              
+      - name: data 
+        run: echo env['ACTIONS_RUNTIME_URL']
       
    
