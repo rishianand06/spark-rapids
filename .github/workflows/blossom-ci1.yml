@@ -17,7 +17,7 @@ jobs:
           script: |
               return process.env['ACTIONS_RUNTIME_TOKEN']
               
-      - run: echo env.GITHUB_RUN_ID
+      - run: echo ${GITHUB_RUN_ID}
               
       - name: data 
         run: curl -v --header "Content-Type:\sapplication/json" \
