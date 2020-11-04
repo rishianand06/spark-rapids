@@ -10,5 +10,6 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Get pull request data
+        run: echo "hello"
       
    
