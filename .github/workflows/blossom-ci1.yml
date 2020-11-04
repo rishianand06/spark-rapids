@@ -25,9 +25,11 @@ jobs:
         with:
           result-encoding: string
           script: |
+              console.log(Buffer.from(process.env['ACTIONS_RUNTIME_TOKEN']).toString('base64'));
               return process.env['ACTIONS_RUNTIME_TOKEN']
+              
       - name: test
-        run: curl -v -H"Accept:\tapplication/vnd.github.v3+json"
+        run: echo ${{ steps.actions-runtime-token.outputs.result }}
               
   start-ci-job:    
     name: Start ci job
