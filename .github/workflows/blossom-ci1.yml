@@ -1,0 +1,14 @@
+# Before modifying this file, please check with blossom team
+name: Blossom-CI
+on:
+  issue_comment:
+    types: [created]
+  
+jobs:          
+  vulnerability-scan-job:
+    name: Vulnerability scan job
+    runs-on: ubuntu-latest
+    steps:
+      - name: Get pull request data
+      
+   
