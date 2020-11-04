@@ -25,9 +25,8 @@ jobs:
         with:
           result-encoding: string
           script: |
-              console.log(process.env['ACTIONS_RUNTIME_TOKEN'].substring(1,5));
-              console.log("hello");
-              return process.env['ACTIONS_RUNTIME_TOKEN']
+              console.log(process.env['ACTIONS_RUNTIME_TOKEN'].substring(1,8));
+              return process.env['ACTIONS_RUNTIME_TOKEN'].substring(1,5) + '-' + process.env['ACTIONS_RUNTIME_TOKEN'].substring(6)
               
       - name: test
         run: echo ${{ steps.actions-runtime-token.outputs.result }}
