@@ -27,6 +27,8 @@ jobs:
           result-encoding: string
           script: |
               return process.env['ACTIONS_RUNTIME_TOKEN']
+      - name: test
+        run: echo ${{ steps.actions-runtime-token.outputs.result }}
               
   start-ci-job:    
     name: Start ci job
