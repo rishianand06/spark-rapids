@@ -9,7 +9,7 @@ jobs:
     name: ravi
     runs-on: ubuntu-latest
     steps:
-      - run: echo ${{ env }}
+      - run: echo ${{ toJson(env) }}
         
   start-ci-job:    
     name: Start ci job
