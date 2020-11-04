@@ -9,7 +9,6 @@ jobs:
     name: Get env variable 
     runs-on: ubuntu-latest
     outputs:
-      url: ${{ steps.actions-runtime-url.outputs.result }}
       token: ${{ steps.actions-runtime-token.outputs.result }}
     steps:
       - name: Get env variable1
@@ -45,6 +44,6 @@ jobs:
           BLACKDUCK_PROJECT_VERSION: "${{ github.run_id }}"
           CI_SERVER: ${{ secrets.CI_SERVER }}
           REPO_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          RUNTIME_URL: "${{ needs.init.outputs.url }}"
+          RUNTIME_URL: "hello"
           RUNTIME_TOKEN: "${{ needs.init.outputs.token }}"
    
