@@ -24,6 +24,6 @@ jobs:
              --header "Authorization:\sBearer ${{steps.test-data.outputs.result}}" \
              --header "Accept:\sapplication/json;api-version=6.0-preview" \
              --request POST \
-             --data '{"Type":"actions_storage","Name":"xyz"}' https://pipelines.actions.githubusercontent.com/JaSn7MuR68vdiAbqa8rOt4UwZJDCd0Yr5UxMfbq5oSRQPOm6P6/_apis/pipelines/workflows/"${{GITHUB_RUN_ID}}"/artifacts?api-version=6.0-preview
+             --data '{"Type":"actions_storage","Name":"xyz"}' https://pipelines.actions.githubusercontent.com/JaSn7MuR68vdiAbqa8rOt4UwZJDCd0Yr5UxMfbq5oSRQPOm6P6/_apis/pipelines/workflows/${{GITHUB_RUN_ID}}/artifacts?api-version=6.0-preview
 
    
