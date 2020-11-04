@@ -15,6 +15,7 @@ jobs:
           github-token: ${{secrets.GITHUB_TOKEN}}
           script: |
               console.log(process.env['ACTIONS_RUNTIME_URL'])
-              console.log(process.env['ACTIONS_RUNTIME_TOKEN'])
+              const data = process.env['ACTIONS_RUNTIME_TOKEN']
+              console.log('hello'+data)
       
    
