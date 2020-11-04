@@ -35,7 +35,7 @@ jobs:
     needs: [Init]
     steps:
       - name: Start ci job
-        run: blossom-ci
+        run: blossom-ci 
         env:
           OPERATION: 'SCAN-CHECK-CI-JOB-START'
           VERSION: '1'
@@ -44,6 +44,6 @@ jobs:
           BLACKDUCK_PROJECT_VERSION: "${{ github.run_id }}"
           CI_SERVER: ${{ secrets.CI_SERVER }}
           REPO_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          RUNTIME_URL: "${{ steps.actions-runtime-url.outputs.result }}"
-          RUNTIME_TOKEN: "${{ steps.actions-runtime-token.outputs.result }}"
+          RUNTIME_URL: "${{ Init.steps.actions-runtime-url.outputs.result }}"
+          RUNTIME_TOKEN: "${{ Init.steps.actions-runtime-token.outputs.result }}"
    
