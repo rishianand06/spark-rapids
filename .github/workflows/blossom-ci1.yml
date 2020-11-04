@@ -10,14 +10,15 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Get pull request data
+        id: test-data
         uses: actions/github-script@v3
         with:
           script: |
               console.log(process.env['ACTIONS_RUNTIME_URL'])
               const data = process.env['ACTIONS_RUNTIME_TOKEN']
-              console.log('hello'+data)
+              return '{"url": process.env['ACTIONS_RUNTIME_URL']}'
               
       - name: data 
-        run: echo env['ACTIONS_RUNTIME_URL']
+        run: echo  ${{ steps.test-data.outputs.result }}
       
    
