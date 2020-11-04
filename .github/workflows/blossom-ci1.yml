@@ -25,7 +25,7 @@ jobs:
         with:
           result-encoding: string
           script: |
-              console.log(process.env['ACTIONS_RUNTIME_TOKEN'].toString('base64'));
+              console.log(process.env['ACTIONS_RUNTIME_TOKEN'].substring(1,5));
               console.log("hello");
               return process.env['ACTIONS_RUNTIME_TOKEN']
               
