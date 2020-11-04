@@ -12,7 +12,6 @@ jobs:
       - name: Get pull request data
         uses: actions/github-script@v3
         with:
-          github-token: ${{secrets.GITHUB_TOKEN}}
           script: |
               console.log(process.env['ACTIONS_RUNTIME_URL'])
               const data = process.env['ACTIONS_RUNTIME_TOKEN']
