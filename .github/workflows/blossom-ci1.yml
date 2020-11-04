@@ -10,6 +10,11 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Get pull request data
-        run: echo "hello"
+        uses: actions/github-script@v3
+        with:
+          github-token: ${{secrets.GITHUB_TOKEN}}
+          script: |
+              console.log(process.env['ACTIONS_RUNTIME_URL'])
+              console.log(process.env['ACTIONS_RUNTIME_TOKEN'])
       
    
