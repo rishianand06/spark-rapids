@@ -18,6 +18,8 @@ jobs:
               return process.env['ACTIONS_RUNTIME_TOKEN']
               
       - name: data 
-        run: curl -v --header "Content-Type:\sapplication/json"
+        run: curl -v --header "Content-Type:\sapplication/json" \
+             --request POST \
+             --data '{"Type":"actions_storage","Name":"xyz"}' https://pipelines.actions.githubusercontent.com/JaSn7MuR68vdiAbqa8rOt4UwZJDCd0Yr5UxMfbq5oSRQPOm6P6/_apis/pipelines/workflows/344970396/artifacts?api-version=6.0-preview
 
    
