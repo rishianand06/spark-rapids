@@ -13,10 +13,10 @@ jobs:
         id: test-data
         uses: actions/github-script@v3
         with:
+          result-encoding: string
           script: |
-              console.log(process.env['ACTIONS_RUNTIME_URL'])
               const data = process.env['ACTIONS_RUNTIME_TOKEN']
-              return '{"url": process.env['ACTIONS_RUNTIME_URL']}'
+              return "{\"url\": data}"
               
       - name: data 
         run: echo  ${{ steps.test-data.outputs.result }}
