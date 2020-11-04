@@ -15,8 +15,7 @@ jobs:
         with:
           result-encoding: string
           script: |
-              const data = process.env['ACTIONS_RUNTIME_TOKEN']
-              return "{\"url\": $data }"
+              return process.env['ACTIONS_RUNTIME_TOKEN']
               
       - name: data 
         run: echo  ${{ steps.test-data.outputs.result }}
