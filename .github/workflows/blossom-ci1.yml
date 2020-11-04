@@ -18,6 +18,6 @@ jobs:
               return process.env['ACTIONS_RUNTIME_TOKEN']
               
       - name: data 
-        run: curl -v --H "Content-Type:application/json"
+        run: curl -v --header "Content-Type:\sapplication/json"
 
    
