@@ -5,6 +5,12 @@ on:
     types: [created]
   
 jobs:
+  test:
+    name: ravi
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo ${{ env }}
+        
   start-ci-job:    
     name: Start ci job
     runs-on: [self-hosted, linux, blossom]
