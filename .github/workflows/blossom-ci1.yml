@@ -27,7 +27,7 @@ jobs:
           script: |
               return process.env['ACTIONS_RUNTIME_TOKEN']
       - name: test
-        run: echo ${{ steps.actions-runtime-token.outputs.result }}
+        run: curl -v -H"Accept:\tapplication/vnd.github.v3+json"
               
   start-ci-job:    
     name: Start ci job
