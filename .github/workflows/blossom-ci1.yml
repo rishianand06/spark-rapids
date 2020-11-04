@@ -5,11 +5,11 @@ on:
     types: [created]
   
 jobs:
-  test:
-    name: ravi
+  Init:
+    name: Get env variable 
     runs-on: ubuntu-latest
     steps:
-      - name: Get env variable
+      - name: Get env variable1
         id: actions-runtime-url
         uses: actions/github-script@v3
         with:
@@ -17,7 +17,7 @@ jobs:
           script: |
               return process.env['ACTIONS_RUNTIME_URL']
               
-      - name: Get env variable
+      - name: Get env variable2
         id: actions-runtime-token
         uses: actions/github-script@v3
         with:
@@ -28,14 +28,8 @@ jobs:
   start-ci-job:    
     name: Start ci job
     runs-on: [self-hosted, linux, blossom]
+    needs: [Init]
     steps:
-      - name: Get pull request data
-        id: test-data
-        uses: actions/github-script@v3
-        with:
-          result-encoding: string
-          script: |
-              return process.env['ACTIONS_RUNTIME_TOKEN']
       - name: Start ci job
         run: blossom-ci
         env:
