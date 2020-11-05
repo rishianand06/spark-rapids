@@ -18,4 +18,23 @@ jobs:
           OPERATION: 'AUTH'
           VERSION: '1'
           
+  job2:
+    name: job2
+    # trigger on pre-defined text
+    if: github.event.comment.body == 'build3'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check if comment is issued by authorized person
+        run: echo ${{ github.event_name }}
   
+  job3:
+    name: job3
+    # trigger on pre-defined text
+    if: github.event.comment.body == 'build2'
+    runs-on: [self-hosted, linux, blossom]
+    steps:
+      - name: Check if comment is issued by authorized person
+        run: blossom-ci
+        env:
+          OPERATION: 'AUTH'
+          VERSION: '1'
