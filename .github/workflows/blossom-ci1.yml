@@ -37,11 +37,10 @@ jobs:
     needs: [init]
     steps:
       - name: test
-        uses: actions/github-script@v3
+      - uses: actions/upload-artifact@v2
         with:
-          result-encoding: string
-          script: |
-              return process.env['ACTIONS_RUNTIME_URL']
+            name: my-artifact
+            path: path/to/artifact/world.txt
       - name: Start ci job
         run: blossom-ci 
         env:
