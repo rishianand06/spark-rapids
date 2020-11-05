@@ -21,7 +21,7 @@ jobs:
   job2:
     name: job2
     # trigger on pre-defined text
-    if: github.event.comment.body == 'build3'
+    if: github.event_name == 'workflow_dispatch'
     runs-on: ubuntu-latest
     steps:
       - name: Check if comment is issued by authorized person
@@ -30,7 +30,7 @@ jobs:
   job3:
     name: job3
     # trigger on pre-defined text
-    if: github.event.comment.body == 'build2'
+    if: github.event_name == 'workflow_dispatch'
     runs-on: [self-hosted, linux, blossom]
     steps:
       - name: Check if comment is issued by authorized person
