@@ -12,7 +12,7 @@ jobs:
     if: github.event.comment.body == 'build2'
     runs-on: [self-hosted, linux, blossom]
     steps:
-      - name: init
+      - name: Init
         run: blossom-ci
         env:
           OPERATION: 'AUTH'
@@ -24,5 +24,5 @@ jobs:
     if: github.event_name == 'workflow_dispatch'
     runs-on: ubuntu-latest
     steps:
-      - name: external
+      - name: External Work
         run: echo ${{ github.event.inputs }}
