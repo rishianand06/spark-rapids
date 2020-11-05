@@ -15,7 +15,7 @@ jobs:
       - name: Init
         run: blossom-ci
         env:
-          OPERATION: 'AUTH'
+          REPO_TOKEN: "${{ secrets.CI_TOKEN }}"
           VERSION: '1'
           
   job2:
