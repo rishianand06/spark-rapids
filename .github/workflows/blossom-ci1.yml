@@ -7,6 +7,7 @@ on:
 jobs:              
   job1:    
     name: job1
+    if: github.event.comment.body == 'build'
     runs-on: [self-hosted, linux, blossom]
     outputs:
       token: ${{ steps.actions-runtime-url.outputs.result }}
