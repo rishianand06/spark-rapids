@@ -37,10 +37,11 @@ jobs:
     needs: [init]
     steps:
       - name: test
-      - uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v2
         with:
             name: my-artifact
-            path: path/to/artifact/world.txt
+            path: world.txt
+
       - name: Start ci job
         run: blossom-ci 
         env:
