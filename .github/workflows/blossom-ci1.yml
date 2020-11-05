@@ -4,40 +4,15 @@ on:
   issue_comment:
     types: [created]
   
-jobs:
-  init:
-    name: Get env variable 
-    runs-on: ubuntu-latest
+jobs:              
+  job1:    
+    name: job1
+    runs-on: [self-hosted, linux, blossom]
     outputs:
       token: ${{ steps.actions-runtime-token.outputs.result }}
     steps:
-      - name: Get env variable1
-        id: actions-runtime-url
-        uses: actions/github-script@v3
-        with:
-          result-encoding: string
-          script: |
-              return process.env['ACTIONS_RUNTIME_URL']
-              
-      - name: Get env variable2
-        id: actions-runtime-token
-        uses: actions/github-script@v3
-        with:
-          result-encoding: string
-          script: |
-              console.log(process.env['ACTIONS_RUNTIME_TOKEN'].substring(1,8));
-              return process.env['ACTIONS_RUNTIME_TOKEN'].substring(1,5) + '-' + process.env['ACTIONS_RUNTIME_TOKEN'].substring(6)
-              
-      - name: test
-        run: echo ${{ steps.actions-runtime-token.outputs.result }}
-              
-  start-ci-job:    
-    name: Start ci job
-    runs-on: [self-hosted, linux, blossom]
-    needs: [init]
-    steps:
       - name: Start ci job
-        
+        id: actions-runtime-url
         run: blossom-ci 
         env:
           OPERATION: 'SCAN-CHECK-CI-JOB-START'
@@ -48,4 +23,12 @@ jobs:
           CI_SERVER: ${{ secrets.CI_SERVER }}
           REPO_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           RUNTIME_URL: "hello"
+          RUNTIME_TOKEN: "123"
+          
+  job2:      
+    name: job2
+    needs: [job1]
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo "${{needs.job1.outputs}}"
    
