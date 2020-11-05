@@ -1,0 +1,21 @@
+# Before modifying this file, please check with blossom team
+name: Blossom-CI
+on:
+  workflow_dispatch:
+  issue_comment:
+    types: [created]
+  
+jobs:
+  job1:
+    name: job1
+    # trigger on pre-defined text
+    if: github.event.comment.body == 'build2'
+    runs-on: [self-hosted, linux, blossom]
+    steps:
+      - name: Check if comment is issued by authorized person
+        run: blossom-ci
+        env:
+          OPERATION: 'AUTH'
+          VERSION: '1'
+          
+  
