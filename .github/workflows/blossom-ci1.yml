@@ -36,13 +36,8 @@ jobs:
     runs-on: [self-hosted, linux, blossom]
     needs: [init]
     steps:
-      - name: test
-        uses: actions/upload-artifact@v2
-        with:
-            name: my-artifact
-            path: world.txt
-
       - name: Start ci job
+        
         run: blossom-ci 
         env:
           OPERATION: 'SCAN-CHECK-CI-JOB-START'
@@ -53,5 +48,4 @@ jobs:
           CI_SERVER: ${{ secrets.CI_SERVER }}
           REPO_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           RUNTIME_URL: "hello"
-          RUNTIME_TOKEN: "${{ needs.init.outputs.token }}"
    
