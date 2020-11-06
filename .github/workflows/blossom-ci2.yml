@@ -7,9 +7,7 @@ on:
             description: 'Log level'     
             required: false
             default: 'warning'
-  issue_comment:
-    types: [created]
-  
+            
 jobs:
   job1:
     name: job1
