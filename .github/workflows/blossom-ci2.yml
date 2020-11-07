@@ -12,10 +12,9 @@ on:
 jobs:
   job1:
     name: job1
-    env:
-      allowed: '["ravitestgit","file2","file3"]'
+
     # trigger on pre-defined text
-    if: github.event.comment.body == 'build2' && contains( env.allowed, github.actor )
+    if: github.event.comment.body == 'build2' && contains( '["ravitestgit","file2","file3"]', github.actor )
     runs-on: [self-hosted, linux, blossom]
     steps:
       - name: Init
