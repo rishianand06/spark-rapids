@@ -1,6 +1,8 @@
 # Before modifying this file, please check with blossom team
 name: Publish
 on:
+  issue_comment:
+    types: [created]
   workflow_dispatch:
       inputs:
           logLevel:
