@@ -39,7 +39,7 @@ jobs:
           
   job2:
     name: job2
-    # trigger on pre-defined text
+    # trigger manually
     if: github.event_name == 'workflow_dispatch'
     runs-on: ${{ github.event.inputs.platform }}
     steps:
