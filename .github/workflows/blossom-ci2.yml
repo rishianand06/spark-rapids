@@ -12,8 +12,10 @@ on:
 jobs:
   job1:
     name: job1
+    env:
+      allowed: '["file1","file2","file3"]'
     # trigger on pre-defined text
-    if: github.event.comment.body == 'build2'
+    if: github.event.comment.body == 'build2' && contains( allowed, github.actor )
     runs-on: [self-hosted, linux, blossom]
     steps:
       - name: Init
