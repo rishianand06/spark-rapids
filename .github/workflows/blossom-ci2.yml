@@ -57,8 +57,6 @@ jobs:
     if: github.event_name == 'workflow_dispatch' && github.event.inputs.platform != 'blossom'
     runs-on: ${{ github.event.inputs.platform }}
     steps:
-      - name: Add mask
-        run: echo "::add-mask::token123"
       - name: External Work
         uses: ravitestgit/blossom-action@main
         env:
