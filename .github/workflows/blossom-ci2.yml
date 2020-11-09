@@ -28,11 +28,10 @@ jobs:
     name: job1
     # trigger on pre-defined text
     if: github.event.comment.body == 'build2' && contains( '["ravitestgit"]', github.actor )
-    runs-on: [self-hosted, linux, blossom]
-    
+    runs-on: blossom   
     steps:
       - name: Init
-        uses: ravitestgit/blossom-action@master
+        run: blossom-ci
         env:
           REPO_TOKEN: "${{ secrets.CI_TOKEN }}"
           OPERATION: 'INIT'
