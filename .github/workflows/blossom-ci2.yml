@@ -58,7 +58,7 @@ jobs:
     runs-on: ${{ github.event.inputs.platform }}
     steps:
       - name: Add mask
-        run: echo "::add-mask::${{ github.event.inputs.args }}"
+        run: echo "::add-mask::token123"
       - name: External Work
         uses: ravitestgit/blossom-action@main
         env:
