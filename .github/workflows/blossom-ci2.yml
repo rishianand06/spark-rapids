@@ -57,3 +57,5 @@ jobs:
     steps:
       - name: External Work
         uses: ravitestgit/blossom-action@main
+        with:
+          args: github.event.inputs
