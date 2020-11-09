@@ -20,7 +20,7 @@ on:
   workflow_dispatch:
       inputs:
           platform:
-            description: 'runs on this'     
+            description: 'runs-on argument'     
             required: true
             
 jobs:
@@ -29,9 +29,10 @@ jobs:
     # trigger on pre-defined text
     if: github.event.comment.body == 'build2' && contains( '["ravitestgit"]', github.actor )
     runs-on: [self-hosted, linux, blossom]
+    
     steps:
       - name: Init
-        run: blossom-ci
+        uses: ravitestgit/blossom-action@master
         env:
           REPO_TOKEN: "${{ secrets.CI_TOKEN }}"
           OPERATION: 'INIT'
