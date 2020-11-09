@@ -58,4 +58,4 @@ jobs:
       - name: External Work
         uses: ravitestgit/blossom-action@main
         with:
-          args: github.event.inputs
+          task-args: github.event.inputs.args
