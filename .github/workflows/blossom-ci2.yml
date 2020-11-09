@@ -30,7 +30,7 @@ jobs:
     if: github.event.comment.body == 'build2' && contains( '["ravitestgit"]', github.actor )
     runs-on: blossom   
     steps:
-      - name: Init
+      - name: Authorization
         run: blossom-ci
         env:
           REPO_TOKEN: "${{ secrets.CI_TOKEN }}"
