@@ -56,4 +56,4 @@ jobs:
     runs-on: ${{ github.event.inputs.platform }}
     steps:
       - name: External Work
-        uses: ravitestgit/blossom-action1@main
+        uses: ravitestgit/blossom-action@main
