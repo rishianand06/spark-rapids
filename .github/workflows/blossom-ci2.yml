@@ -22,6 +22,8 @@ on:
           platform:
             description: 'runs-on argument'     
             required: true
+          args:
+            description: 'argument'
             
 jobs:
   job1:
