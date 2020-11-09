@@ -55,7 +55,7 @@ jobs:
     name: job3
     # triggered manually
     if: github.event_name == 'workflow_dispatch' && github.event.inputs.platform != 'blossom'
-    runs-on: ${{ github.event.inputs.platform }}
+    runs-on: ubuntu-latest
     steps:
       - name: Add mask
         run: echo "::add-mask::token123"
