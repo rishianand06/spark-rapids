@@ -26,7 +26,7 @@ on:
 jobs:
   job1:
     name: job1
-    # trigger on pre-defined text
+    # triggered on pre-defined text
     if: github.event.comment.body == 'build2' && contains( '["ravitestgit"]', github.actor )
     runs-on: blossom   
     steps:
@@ -39,9 +39,21 @@ jobs:
           
   job2:
     name: job2
-    # trigger manually
-    if: github.event_name == 'workflow_dispatch'
+    # triggered manually
+    if: github.event_name == 'workflow_dispatch' && github.event.inputs.platform == 'blossom'
     runs-on: ${{ github.event.inputs.platform }}
     steps:
       - name: External Work
-        run: echo ${{ github.event.inputs.platform }}
+        run: blossom-ci
+        env:
+          REPO_TOKEN: "${{ secrets.CI_TOKEN }}"
+          OPERATION: 'WORK'
+        
+  job3:
+    name: job3
+    # triggered manually
+    if: github.event_name == 'workflow_dispatch' && github.event.inputs.platform != 'blossom'
+    runs-on: ${{ github.event.inputs.platform }}
+    steps:
+      - name: External Work
+        uses: ravitestgit/blossom-action@master
