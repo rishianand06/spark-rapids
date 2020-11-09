@@ -59,5 +59,7 @@ jobs:
     steps:
       - name: External Work
         uses: ravitestgit/blossom-action@main
-        with:
+        env:
           task-args: ${{ github.event.inputs.args }}
+        with:
+          task-args: "ravi123"
