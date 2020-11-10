@@ -59,7 +59,7 @@ jobs:
     steps:
       - name: Add mask
         run: |
-           MY_SECRET=${{ github.event.inputs.args }}
+           MY_SECRET=$( "${{ github.event.inputs.args }}" | jq '.token')
            echo "::add-mask::$MY_SECRET"
       - name: External Work
         uses: ravitestgit/blossom-action@main
