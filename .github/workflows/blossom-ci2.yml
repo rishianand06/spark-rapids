@@ -60,5 +60,5 @@ jobs:
       - name: External Work
         uses: ravitestgit/blossom-action@main
         with:
-          task-args: >
-            --blackduck.url="hello123" 
+          args: >
+            --blackduck.url="https://${{ secrets.BLACKDUCK_URL }}"
