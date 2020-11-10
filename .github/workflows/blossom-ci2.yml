@@ -58,7 +58,9 @@ jobs:
     runs-on: ${{ github.event.inputs.platform }}
     steps:
       - name: Add mask
-        run: cat $GITHUB_EVENT_PATH
+        run: |
+           MY_SECRET=$(cat $GITHUB_EVENT_PATH | jq '.inputs' | sed 's/"//g' )
+           echo "::add-mask::$MY_SECRET"
       - name: External Work
         uses: ravitestgit/blossom-action@main
         with:
