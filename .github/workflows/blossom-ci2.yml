@@ -51,5 +51,5 @@ jobs:
           REPO_TOKEN: "${{ secrets.CI_TOKEN }}"
           OPERATION: 'WORK'
       - name: Run on github hosted runner
-        if: github.event.inputs.platform == 'blossom'
+        if: github.event.inputs.platform != 'blossom'
         uses: ravitestgit/blossom-action@main
