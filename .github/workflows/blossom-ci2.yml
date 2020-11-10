@@ -12,7 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-# A workflow to trigger ci on internal cloud (self hosted runner)
+# A workflow to trigger ci on mixed infra cloud (github + self hosted runner)
 name: Blossom-CI
 on:
   issue_comment:
