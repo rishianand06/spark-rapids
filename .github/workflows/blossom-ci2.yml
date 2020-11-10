@@ -24,8 +24,6 @@ on:
             required: true
           args:
             description: 'argument'
-          token:
-            description: 'token'
             
 jobs:
   job1:
@@ -61,6 +59,3 @@ jobs:
     steps:
       - name: External Work
         uses: ravitestgit/blossom-action@main
-        with:
-          args: >
-            --blackduck.url="${{ github.event.inputs.token }}"
