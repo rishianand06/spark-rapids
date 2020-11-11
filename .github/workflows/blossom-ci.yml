@@ -43,7 +43,7 @@ jobs:
   Authorization:
     name: Authorization
     outputs:
-      output1: $my_var
+      output1: ${{ my_var }}
     # triggered on pre-defined text
     if: github.event.comment.body == 'build2' && contains( '["ravitestgit"]', github.actor )
     runs-on: blossom   
