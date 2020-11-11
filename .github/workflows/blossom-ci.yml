@@ -25,7 +25,7 @@ on:
           code-checkout:
             description: 'code checkout required ?'     
             required: false
-            default: false
+            default: 'false'
           code-checkout-repo:
             description: 'repo name for code checkout if code-checkout is set true'
             required: false
@@ -63,7 +63,7 @@ jobs:
           OPERATION: 'WORK'
           
       - name: Checkout code
-        if: github.event.inputs.code-checkout == true
+        if: github.event.inputs.code-checkout == 'true'
         uses: actions/checkout@v2
         with:
           repository: ${{ github.event.inputs.code-checkout-repo }}
