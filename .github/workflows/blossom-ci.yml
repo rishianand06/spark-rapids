@@ -22,6 +22,9 @@ on:
           platform:
             description: 'runs-on argument'     
             required: true
+          pull-request:
+            description: 'pull request number'
+            required: true
           code-checkout:
             description: 'code checkout required ?'     
             required: false
@@ -50,7 +53,7 @@ jobs:
           OPERATION: 'INIT'
         
   Work:
-    name: Work
+    name: Work PR# ${{ github.event.inputs.pull-request }}
     # triggered manually
     if: github.event_name == 'workflow_dispatch'
     runs-on: ${{ github.event.inputs.platform }}
