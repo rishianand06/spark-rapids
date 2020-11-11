@@ -22,8 +22,19 @@ on:
           platform:
             description: 'runs-on argument'     
             required: true
-          args:
-            description: 'argument'
+          code-checkout:
+            description: 'code checkout required ?'     
+            required: false
+            default: false
+          code-checkout-repo:
+            description: 'repo name for code checkout if code-checkout is set true'
+            required: false
+          code-checkout-ref:
+            description: 'ref for code checkout like branch, sha if code-checkout is set true'
+            required: false
+          extra-args:
+            description: 'extra argument'
+            required: false
             
 jobs:
   Authorization:
@@ -50,7 +61,15 @@ jobs:
         env:
           REPO_TOKEN: "${{ secrets.CI_TOKEN }}"
           OPERATION: 'WORK'
-        
+          
+      - name: Checkout code
+        if: github.event.inputs.code-checkout == true
+        uses: actions/checkout@v2
+        with:
+          repository: ${{ github.event.inputs.code-checkout-repo }}
+          ref: ${{ github.event.inputs.code-checkout-ref }}
+          lfs: 'true'
+          
       - name: Run on github hosted runner
         if: github.event.inputs.platform != 'blossom'
         uses: ravitestgit/blossom-action@main
