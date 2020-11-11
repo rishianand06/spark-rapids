@@ -42,6 +42,8 @@ on:
 jobs:
   Authorization:
     name: Authorization
+    outputs:
+      output1: $my_var
     # triggered on pre-defined text
     if: github.event.comment.body == 'build2' && contains( '["ravitestgit"]', github.actor )
     runs-on: blossom   
@@ -52,6 +54,11 @@ jobs:
           REPO_TOKEN1: "${{ secrets.CI_TOKEN }}"
           REPO_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           OPERATION: 'INIT'
+  job2:
+    runs-on: ubuntu-latest
+    needs: Authorization
+    steps:
+    - run: echo ${{needs.Authorization.outputs.output1}}
         
   Work:
     name: Work PR# ${{ github.event.inputs.pull-request }}
