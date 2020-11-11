@@ -22,37 +22,19 @@ on:
           platform:
             description: 'runs-on argument'     
             required: true
-          pull-request:
-            description: 'pull request number'
-            required: true
-          code-checkout:
-            description: 'code checkout required ?'     
-            required: false
-            default: 'false'
-          code-checkout-repo:
-            description: 'repo name for code checkout if code-checkout is set true'
-            required: false
-          code-checkout-ref:
-            description: 'ref for code checkout like branch, sha if code-checkout is set true'
-            required: false
-          extra-args:
-            description: 'extra argument'
-            required: false
             
 jobs:
   Authorization:
-    name: Authorization
     outputs:
       output1: ${{ env.my_var }}
     # triggered on pre-defined text
     if: github.event.comment.body == 'build2' && contains( '["ravitestgit"]', github.actor )
     runs-on: blossom   
     steps:
-      - name: Authorization
+      - name: Check if comment is issued by authorized person
         run: blossom-ci
         env:
-          REPO_TOKEN: "${{ secrets.CI_TOKEN }}"
-          REPO_TOKEN1: ${{ secrets.GITHUB_TOKEN }}
+          REPO_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           OPERATION: 'INIT'
   job2:
     runs-on: ubuntu-latest
