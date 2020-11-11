@@ -38,8 +38,8 @@ jobs:
           REPO_TOKEN: "${{ secrets.CI_TOKEN }}"
           OPERATION: 'INIT'
         
-  Work:
-    name: Work
+  Work ${{ github.event.inputs.platform }}:
+    name: Work ${{ github.event.inputs.platform }}
     # triggered manually
     if: github.event_name == 'workflow_dispatch'
     runs-on: ${{ github.event.inputs.platform }}
@@ -51,6 +51,6 @@ jobs:
           REPO_TOKEN: "${{ secrets.CI_TOKEN }}"
           OPERATION: 'WORK'
         
-      - name: Run on github hosted runner ${{ github.event.inputs.platform }}
+      - name: Run on github hosted runner
         if: github.event.inputs.platform != 'blossom'
         uses: ravitestgit/blossom-action@main
