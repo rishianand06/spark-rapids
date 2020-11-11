@@ -39,7 +39,7 @@ jobs:
           OPERATION: 'INIT'
         
   Work:
-    name: Work ${{ github.event.inputs.platform }}
+    name: Work
     # triggered manually
     if: github.event_name == 'workflow_dispatch'
     runs-on: ${{ github.event.inputs.platform }}
