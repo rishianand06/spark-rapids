@@ -40,7 +40,7 @@ jobs:
           REPO_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           OPERATION: 'INIT'
         
-  Vulnerability scan:
+  Vulnerability-scan:
     name: Vulnerability scan
     needs: [Authorization]
     runs-on: ubuntu-latest
