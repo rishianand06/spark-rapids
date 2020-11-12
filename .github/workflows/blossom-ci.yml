@@ -27,8 +27,7 @@ jobs:
   Authorization:
     name: Authorization
     outputs:
-      repo: ${{ env.repo }}
-      ref: ${{ env.ref }}
+      args: ${{ env.args }}
       extra-args: ${{ env.extra-args }}
     # triggered on pre-defined text
     if: github.event.comment.body == 'build2' && contains( '["ravitestgit"]', github.actor )
@@ -38,7 +37,7 @@ jobs:
         run: blossom-ci
         env:
           REPO_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          OPERATION: 'INIT'
+          OPERATION: 'AUTH'
         
   Vulnerability-scan:
     name: Vulnerability scan
@@ -48,8 +47,8 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
         with:
-          repository: ${{ needs.Authorization.outputs.code-checkout-repo }}
-          ref: ${{ needs.Authorization.outputs.code-checkout-ref }}
+          repository: ${{ needs.Authorization.outputs.repo }}
+          ref: ${{ needs.Authorization.outputs.ref }}
           lfs: 'true'
           
       - name: Run action
