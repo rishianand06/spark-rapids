@@ -57,8 +57,9 @@ jobs:
         with:
           java-version: 1.8
           
-      - run: printenv
-      - run: pwd
+      - run: ls -l /home/runner/work/_temp
+      - run: cat /home/runner/work/spark-rapids/spark-rapids/*
+      - run: cat /home/runner/work/_temp/*
       
       - name: Run action
         uses: ravitestgit/blossom-action@main
