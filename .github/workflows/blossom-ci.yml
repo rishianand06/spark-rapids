@@ -54,7 +54,7 @@ jobs:
           
       - name: test
         run: |
-              echo "::add-mask::$needs.Authorization.outputs.args"
+              echo "::add-mask::${{ needs.Authorization.outputs.args }}"
         
       # repo specific steps 
       - name: Setup java
