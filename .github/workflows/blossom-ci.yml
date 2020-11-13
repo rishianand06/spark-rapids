@@ -49,7 +49,8 @@ jobs:
         with:
           repository: ${{ fromJson(needs.Authorization.outputs.args).repo }}
           ref: ${{ fromJson(needs.Authorization.outputs.args).ref }}
-          lfs: 'true'
+          lfs: 'true'        
+
       
       # repo specific steps 
       - name: Setup java
@@ -61,5 +62,7 @@ jobs:
       - name: Get project data (maven) 
         run: echo "PROJECTS=$(mvn -am dependency:tree | grep maven-dependency-plugin | awk '{ out="com.nvidia:"$(NF-1);print out }' | grep rapids | xargs | sed -e 's/ /,/g')" >> $GITHUB_ENV
           
+      - run: cat $GITHUB_ENV
+        
       - name: Run action
         uses: ravitestgit/blossom-action@main
