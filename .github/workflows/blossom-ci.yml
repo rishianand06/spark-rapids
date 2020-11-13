@@ -63,5 +63,3 @@ jobs:
                 
       - name: Run action
         uses: ravitestgit/blossom-action@main
-        env:
-          args: ${{ needs.Authorization.outputs.args }}
