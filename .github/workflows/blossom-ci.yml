@@ -55,11 +55,7 @@ jobs:
       - name: Setup java
         uses: actions/setup-java@v1
         with:
-          java-version: 1.8
-          
-      - run: ls -l /home/runner/work/_temp
-      - run: cat /home/runner/work/spark-rapids/spark-rapids/*
-      - run: cat /home/runner/work/_temp/*
+          java-version: 1.8       
       
       - name: Run action
         uses: ravitestgit/blossom-action@main
