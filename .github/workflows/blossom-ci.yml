@@ -55,7 +55,7 @@ jobs:
         with:
          script: |
                   const myInput = core.getInput('data', { required: true });
-                  console.log(myInput)
+                  console.log(process.needs)
                   return "Hello!"
          data:  ${{ toJson(needs.Authorization.outputs.args) }}
          result-encoding: string
