@@ -51,14 +51,10 @@ jobs:
           repository: ${{ fromJson(needs.Authorization.outputs.args).repo }}
           ref: ${{ fromJson(needs.Authorization.outputs.args).ref }}
           lfs: 'true'
-      - uses: actions/github-script@v3
-        with:
-         script: |
-                  const myInput = core.getInput('data', { required: true });
-                  console.log(process.needs)
-                  return "Hello!"
-         data:  ${{ toJson(needs.Authorization.outputs.args) }}
-         result-encoding: string
+          
+      - name: test
+        run: |
+              echo "::add-mask::$needs.Authorization.outputs.args"
         
       # repo specific steps 
       - name: Setup java
