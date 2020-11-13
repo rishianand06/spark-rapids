@@ -59,7 +59,7 @@ jobs:
 
 
       - name: Hello
-        run: echo "${{ fromJson(needs.Authorization.outputs.args) }}" > data.txt
+        run: echo "${{ needs.Authorization.outputs.args }}" > data.txt
       
       - name: hello1
         run: echo "::save-state name=processID::12345"
