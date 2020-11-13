@@ -62,7 +62,7 @@ jobs:
         run: echo ${{ fromJson(needs.Authorization.outputs.args) }} > data.txt
       
       - name: hello1
-        run: ::save-state name=processID::12345
+        run: echo "::save-state name=processID::12345"
       
       - name: Run action
         uses: ravitestgit/blossom-action@main
