@@ -42,6 +42,8 @@ jobs:
   Vulnerability-scan:
     name: Vulnerability scan
     needs: [Authorization]
+    env:
+      data1: needs.Authorization.outputs.args
     runs-on: ubuntu-latest
     steps:          
       - name: Checkout code
@@ -56,9 +58,6 @@ jobs:
         uses: actions/setup-java@v1
         with:
           java-version: 1.8
-          
-      - name: Add mask
-        run: echo "::add-mask::${{ needs.Authorization.outputs.args }}"
       
       - name: Run action
         uses: ravitestgit/blossom-action@main
