@@ -44,9 +44,10 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - id: sets-a-secret
+        env:
+          my_data: ravi
         run: |
-          my_data=ravi
-          echo "::add-mask::my_data
+          echo "::add-mask::$env.my_data
           
       - name: Checkout code
         uses: actions/checkout@v2
