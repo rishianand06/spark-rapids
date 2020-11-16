@@ -44,10 +44,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: test
-        uses: actions/setup-java@v1
-        with:
-          java-version: 1.8
-          ref: ${{ needs.Authorization.outputs.args }}
+        run: echo ${{ needs.Authorization.outputs.args }}
           
       - name: Checkout code
         uses: actions/checkout@v2
