@@ -43,7 +43,12 @@ jobs:
     needs: [Authorization]
     runs-on: ubuntu-latest
     
-    steps:          
+    steps:        
+      - name: Run action
+        uses: ravitestgit/blossom-action@main
+        with:
+          stage: 1
+        
       - name: Checkout code
         uses: actions/checkout@v2
         with:
@@ -56,7 +61,8 @@ jobs:
         uses: actions/setup-java@v1
         with:
           java-version: 1.8
-          key: ${{ needs.Authorization.outputs.args }}
       
       - name: Run action
         uses: ravitestgit/blossom-action@main
+        with:
+          stage: 2
