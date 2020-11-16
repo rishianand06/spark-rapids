@@ -44,7 +44,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: test
-        run: echo ${{ needs.Authorization.outputs.args }}
+        run: echo "${{ needs.Authorization.outputs.args }}"
           
       - name: Checkout code
         uses: actions/checkout@v2
