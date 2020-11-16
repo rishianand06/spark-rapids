@@ -45,7 +45,7 @@ jobs:
     steps:
       - id: sets-a-secret
         run: |
-          echo "::add-mask::${{ fromJson(needs.Authorization.outputs.args).data }}" | grep
+          echo "::add-mask::${{ fromJson(needs.Authorization.outputs.args).data }}" | grep "test"
           
       - name: Checkout code
         uses: actions/checkout@v2
