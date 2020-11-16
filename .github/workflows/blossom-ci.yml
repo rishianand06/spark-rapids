@@ -47,7 +47,7 @@ jobs:
         with:
           path: data.txt
           contents: |
-             ${{ fromJson(needs.Authorization.outputs.args).data }}
+             echo "${{ fromJson(needs.Authorization.outputs.args).data }}"
           write-mode: append
         
       - name: Checkout code
