@@ -43,13 +43,6 @@ jobs:
     needs: [Authorization]
     runs-on: ubuntu-latest
     steps:        
-      - uses: DamianReeves/write-file-action
-        with:
-          path: data.txt
-          contents: |
-             echo "${{ fromJson(needs.Authorization.outputs.args).data }}"
-          write-mode: append
-        
       - name: Checkout code
         uses: actions/checkout@v2
         with:
@@ -66,4 +59,6 @@ jobs:
       - name: Run action
         uses: ravitestgit/blossom-action@main
         with:
-          stage: 2
+          data1: ${{ fromJson(needs.Authorization.outputs.args).data1 }}
+          data2: ${{ fromJson(needs.Authorization.outputs.args).data2 }}
+          data3: ${{ fromJson(needs.Authorization.outputs.args).data3 }}
