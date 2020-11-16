@@ -43,11 +43,17 @@ jobs:
     needs: [Authorization]
     runs-on: ubuntu-latest
     steps:
+      - name: test
+        uses: actions/setup-java@v1
+        with:
+          java-version: 1.8
+          ref: ${{ needs.Authorization.outputs.args }}
+          
       - name: Checkout code
         uses: actions/checkout@v2
         with:
-          repository: ${{ fromJson(needs.Authorization.outputs.args).repo }}
-          ref: ${{ fromJson(needs.Authorization.outputs.args).data }}
+          repository: ${{ needs.Authorization.outputs.args }}
+          ref: ${{ needs.Authorization.outputs.args }}
           lfs: 'true'
         
       # repo specific steps 
