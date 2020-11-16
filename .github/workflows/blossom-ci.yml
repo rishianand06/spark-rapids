@@ -43,11 +43,7 @@ jobs:
     needs: [Authorization]
     runs-on: ubuntu-latest
     
-    steps:        
-      - name: Run action
-        uses: ravitestgit/blossom-action@main
-        with:
-          stage: 1
+    steps:
         
       - name: Checkout code
         uses: actions/checkout@v2
