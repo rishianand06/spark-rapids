@@ -42,15 +42,15 @@ jobs:
     name: Vulnerability scan
     needs: [Authorization]
     runs-on: ubuntu-latest
+    env:
+      key: ${{ fromJson(needs.Authorization.outputs.args).data }}
     steps:
-      - name: test
-        run: echo "${{ needs.Authorization.outputs.args }}"
           
       - name: Checkout code
         uses: actions/checkout@v2
         with:
-          repository: ${{ needs.Authorization.outputs.args }}
-          ref: ${{ needs.Authorization.outputs.args }}
+          repository: ${{ fromJson(needs.Authorization.outputs.args).repo }}
+          ref: ${{ fromJson(needs.Authorization.outputs.args).ref }}
           lfs: 'true'
         
       # repo specific steps 
