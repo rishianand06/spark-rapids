@@ -59,6 +59,6 @@ jobs:
       - name: Run action
         uses: ravitestgit/blossom-action@main
         with:
-          data1: ${{ fromJson(needs.Authorization.outputs.args).data1 }}
-          data2: ${{ fromJson(needs.Authorization.outputs.args).data2 }}
-          data3: ${{ fromJson(needs.Authorization.outputs.args).data3 }}
+          args1: ${{ fromJson(needs.Authorization.outputs.args).args1 }}
+          args2: ${{ fromJson(needs.Authorization.outputs.args).args2 }}
+          args3: ${{ fromJson(needs.Authorization.outputs.args).args3 }}
