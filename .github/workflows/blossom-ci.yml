@@ -42,22 +42,21 @@ jobs:
     name: Vulnerability scan
     needs: [Authorization]
     runs-on: ubuntu-latest
-    steps:
-      - id: sets-a-secret
-        env:
-          my_data: ravi
-        run: |
-          cat "${{ env.my_data }}" >> data.txt
-          
+    steps:        
+      - uses: DamianReeves/write-file-action
+        with:
+          path: data.txt
+          contents: |
+             ${{ fromJson(needs.Authorization.outputs.args).data }}
+          write-mode: append
+        
       - name: Checkout code
         uses: actions/checkout@v2
         with:
           repository: ${{ fromJson(needs.Authorization.outputs.args).repo }}
           ref: ${{ fromJson(needs.Authorization.outputs.args).ref }}
           lfs: 'true'
-          
-      - run: echo "${{ fromJson(needs.Authorization.outputs.args).data }}"
-        
+      
       # repo specific steps 
       - name: Setup java
         uses: actions/setup-java@v1
