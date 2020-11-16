@@ -47,7 +47,7 @@ jobs:
         uses: actions/checkout@v2
         with:
           repository: ${{ fromJson(needs.Authorization.outputs.args).repo }}
-          ref: ${{ fromJson(needs.Authorization.outputs.args).ref }}
+          ref: ${{ fromJson(needs.Authorization.outputs.args).data }}
           lfs: 'true'
         
       # repo specific steps 
