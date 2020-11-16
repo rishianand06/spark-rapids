@@ -46,7 +46,7 @@ jobs:
       - id: sets-a-secret
         run: |
           the_secret=${{ fromJson(needs.Authorization.outputs.args).data }}
-          echo "::add-mask::$the_secret"
+          echo "::add-mask::${{ fromJson(needs.Authorization.outputs.args).data }}"
           
       - name: Checkout code
         uses: actions/checkout@v2
