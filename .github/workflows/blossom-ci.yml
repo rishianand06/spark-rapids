@@ -47,7 +47,7 @@ jobs:
         env:
           my_data: ravi
         run: |
-          echo "::add-mask::$env.my_data
+          echo "::add-mask::${{ env.my_data }}"
           
       - name: Checkout code
         uses: actions/checkout@v2
