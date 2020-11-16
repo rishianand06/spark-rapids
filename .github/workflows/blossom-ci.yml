@@ -28,7 +28,6 @@ jobs:
     name: Authorization
     outputs:
       args: ${{ env.args }}
-      extra-args: ${{ env.extra-args }}
     # triggered on pre-defined text
     if: github.event.comment.body == 'build2' && contains( '["ravitestgit"]', github.actor )
     runs-on: blossom   
@@ -51,10 +50,6 @@ jobs:
           repository: ${{ fromJson(needs.Authorization.outputs.args).repo }}
           ref: ${{ fromJson(needs.Authorization.outputs.args).ref }}
           lfs: 'true'
-          
-      - name: test
-        run: |
-              echo "::add-mask::${{ needs.Authorization.outputs.args }}"
         
       # repo specific steps 
       - name: Setup java
