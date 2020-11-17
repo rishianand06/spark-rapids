@@ -42,8 +42,7 @@ jobs:
     name: Vulnerability scan
     needs: [Authorization]
     runs-on: ubuntu-latest
-    steps:        
-      - run: echo ${{ fromJson(needs.Authorization.outputs.args).args1 }}
+    steps:
       - name: Checkout code
         uses: actions/checkout@v2
         with:
