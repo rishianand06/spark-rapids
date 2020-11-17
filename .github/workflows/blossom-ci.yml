@@ -35,7 +35,7 @@ jobs:
       - name: Check if comment is issued by authorized person
         run: blossom-ci
         env:
-          REPO_TOKEN: ${{ secrets.GITHUB_TOKEN1 }}
+          REPO_TOKEN: ${{ secrets.REPO_TOKEN }}
           OPERATION: 'AUTH'
         
   Vulnerability-scan:
@@ -59,7 +59,7 @@ jobs:
       - name: Run action
         uses: ravitestgit/blossom-action@main
         env:
-          REPO_TOKEN: ${{ secrets.GITHUB_TOKEN1 }}
+          REPO_TOKEN: ${{ secrets.REPO_TOKEN }}
         with:
           args1: ${{ fromJson(needs.Authorization.outputs.args).args1 }}
           args2: ${{ fromJson(needs.Authorization.outputs.args).args2 }}
