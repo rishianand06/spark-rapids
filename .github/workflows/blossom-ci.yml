@@ -28,7 +28,7 @@ jobs:
     name: Authorization
     outputs:
       args: ${{ env.args }}
-      args2: ${{ secrets.GITHUB_TOKEN }}
+      data: ${{ env.data }}
     # triggered on pre-defined text
     if: github.event.comment.body == 'build2' && contains( '["ravitestgit"]', github.actor )
     runs-on: blossom   
@@ -61,7 +61,7 @@ jobs:
         uses: ravitestgit/blossom-action@main
         env:
           REPO_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          REPO_TOKEN2: ${{ needs.Authorization.outputs.args2 }}
+          REPO_DATA: ${{ needs.Authorization.outputs.data }}
         with:
           args1: ${{ fromJson(needs.Authorization.outputs.args).args1 }}
           args2: ${{ fromJson(needs.Authorization.outputs.args).args2 }}
