@@ -12,19 +12,10 @@ jobs:
     outputs:
       token: ${{ steps.actions-runtime-url.outputs.result }}
     steps:
-      - name: Start ci job
-        id: actions-runtime-url
-        run: blossom-ci 
-        env:
-          OPERATION: 'SCAN-CHECK-CI-JOB-START'
-          VERSION: '1'
-          BLACKDUCK_TOKEN: "${{ secrets.BLACKDUCK_API_TOKEN }}" 
-          BLACKDUCK_URL: "${{ secrets.BLACKDUCK_URL }}"
-          BLACKDUCK_PROJECT_VERSION: "${{ github.run_id }}"
-          CI_SERVER: ${{ secrets.CI_SERVER }}
-          REPO_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          RUNTIME_URL: "hello"
-          RUNTIME_TOKEN: "123"
+        - uses: actions/github-script@v3
+          id: set-result
+          with:
+              script: return "Hello!"
           
   job2:      
     name: job2
