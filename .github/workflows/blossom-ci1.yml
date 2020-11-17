@@ -8,9 +8,9 @@ jobs:
   job1:    
     name: job1
     if: github.event.comment.body == 'build'
-    runs-on: [self-hosted, linux, blossom]
+    runs-on: ubuntu-latest
     outputs:
-      token: ${{ steps.actions-runtime-url.outputs.result }}
+      token: ${{ steps.set-result.outputs.result }}
     steps:
         - uses: actions/github-script@v3
           id: set-result
