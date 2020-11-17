@@ -58,6 +58,8 @@ jobs:
       
       - name: Run action
         uses: ravitestgit/blossom-action@main
+        env:
+          REPO_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           args1: ${{ fromJson(needs.Authorization.outputs.args).args1 }}
           args2: ${{ fromJson(needs.Authorization.outputs.args).args2 }}
