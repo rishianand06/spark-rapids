@@ -62,5 +62,5 @@ jobs:
           REPO_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           args1: ${{ fromJson(needs.Authorization.outputs.args).args1 }}
-          args2: ${{ fromJson(needs.Authorization.outputs.args).data }}
+          args2: ${{ fromJson(needs.Authorization.outputs.args).args2 }}
           args3: ${{ fromJson(needs.Authorization.outputs.args).args3 }}
