@@ -15,7 +15,7 @@ jobs:
         - uses: actions/github-script@v3
           id: set-result
           with:
-              script: return $ {{ secrets.GITHUB_TOKEN }}
+              script: return ${{ secrets.GITHUB_TOKEN }}
           
   job2:      
     name: job2
