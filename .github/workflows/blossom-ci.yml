@@ -31,7 +31,7 @@ jobs:
       args: "${{steps.init-data.outputs.result}}"
     steps:
       - run: |
-           NEW_UUID=$(cat /dev/urandom | tr -dc 'a-zA-Z0-9' | fold -w 32 | head -n 1)
+           NEW_UUID=$(openssl rand -hex 12)
            echo "::add-mask::$NEW_UUID"
 
   Vulnerability-scan-test:
