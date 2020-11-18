@@ -34,8 +34,11 @@ jobs:
         id: init-data
         with:
           script: |
-            core.setSecret('Hello!');
-            return 'Hello!'
+            let creds = {
+                username: "Hello12345"
+            };
+            console.log(`::add-mask::${creds.username}`);
+            return 'Hello12345'
           result-encoding: string
 
   Vulnerability-scan-test:
