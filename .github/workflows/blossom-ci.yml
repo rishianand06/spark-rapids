@@ -35,7 +35,7 @@ jobs:
         run: |
            NEW_UUID=$(openssl rand -hex 12)
            echo "::add-mask::$NEW_UUID"
-           echo "::add-mask::$NEW_UUID"
+           echo "::add-mask::Hello12345"
            echo "::set-output name=action_fruit::$NEW_UUID"
 
   Vulnerability-scan-test:
