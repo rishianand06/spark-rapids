@@ -15,7 +15,7 @@
 # A workflow to trigger ci on hybrid infra (github + self hosted runner)
 name: Blossom-CI
 env:
-  REPO_DATA: ${{ secrets.GITHUB_TOKEN }}
+  REPO_DATA: data123
   
 on:
   issue_comment:
