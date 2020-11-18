@@ -28,7 +28,7 @@ jobs:
     name: Init
     runs-on: ubuntu-latest
     outputs:
-      random-key: ${{ steps.init-data.outputs.random-key }} 
+      random-key: ${{ steps.init-data.outputs.uuid }} 
     steps:
       - name: Generate init data
         id: init-data
