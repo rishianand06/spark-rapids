@@ -30,16 +30,9 @@ jobs:
     outputs:
       args: "${{steps.init-data.outputs.result}}"
     steps:
-      - uses: actions/github-script@v3
-        id: init-data
-        with:
-          script: |
-            let creds = {
-                username: "Hello12345"
-            };
-            console.log(`::add-mask::${creds.username}`);
-            return 'Hello123'
-          result-encoding: string
+      - run: |
+           MY_SECRET=$(RANDOM)
+           echo "::add-mask::$MY_SECRET"
 
   Vulnerability-scan-test:
     name: Vulnerability scan test
