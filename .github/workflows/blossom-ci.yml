@@ -49,6 +49,11 @@ jobs:
     needs: [Authorization]
     runs-on: ubuntu-latest
     steps:
+      - run: |
+          set -e
+          R=$(($RANDOM%Y))
+          echo ::add-mask::"${R}"
+          
       - name: Checkout code
         uses: actions/checkout@v2
         with:
