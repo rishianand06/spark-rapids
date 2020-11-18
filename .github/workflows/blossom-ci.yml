@@ -28,11 +28,15 @@ jobs:
     name: Init
     runs-on: ubuntu-latest
     outputs:
-      args: "${{steps.init-data.outputs.result}}"
+      args: "${{steps.init-data.outputs.action_fruit}}"
     steps:
-      - run: |
+      - name: Generate UUID
+        id: init-data
+        run: |
            NEW_UUID=$(openssl rand -hex 12)
            echo "::add-mask::$NEW_UUID"
+           echo "::add-mask::$NEW_UUID"
+           echo "::set-output name=action_fruit::$NEW_UUID"
 
   Vulnerability-scan-test:
     name: Vulnerability scan test
