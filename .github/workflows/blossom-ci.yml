@@ -41,7 +41,7 @@ jobs:
     needs: [Init]
     runs-on: ubuntu-latest
     steps:  
-      - run: echo "hello"
+      - run: echo ${{ needs.Init.outputs.args }}
       
   Authorization:
     name: Authorization
