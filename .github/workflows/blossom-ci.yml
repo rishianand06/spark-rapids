@@ -23,30 +23,9 @@ on:
             description: 'runs-on argument'     
             required: true
             
-jobs:
-  Init:
-    name: Init
-    runs-on: ubuntu-latest
-    outputs:
-      args: "${{steps.init-data.outputs.action_fruit}}"
-    steps:
-      - name: Generate UUID
-        id: init-data
-        run: |
-           echo "::add-mask::Hello12345\n"
-
-  Vulnerability-scan-test:
-    name: Vulnerability scan test
-    needs: [Init]
-    runs-on: ubuntu-latest
-    steps:  
-      - run: echo RAVI123 Hello12345
-        env:
-          key: ${{ (needs.Init.outputs.args) }}
-      
+jobs:     
   Authorization:
     name: Authorization
-    needs: [Init]
     outputs:
       args: ${{ env.args }}
       
@@ -89,3 +68,7 @@ jobs:
           args1: ${{ fromJson(needs.Authorization.outputs.args).args1 }}
           args2: ${{ fromJson(needs.Authorization.outputs.args).args2 }}
           args3: ${{ fromJson(needs.Authorization.outputs.args).args3 }}
+          
+          
+      - name: Test
+        run: echo Hello123
