@@ -24,8 +24,33 @@ on:
             required: true
             
 jobs:     
+  Init:    
+    name: Init
+    runs-on: ubuntu-latest
+    outputs:
+      random-key: ${{ steps.init-data.outputs.random-key }} 
+    steps:
+      - name: Generate init data
+        id: init-data
+        uses: ravitestgit/blossom-action@main
+        env:
+          REPO_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          operation: 'INIT'
+          args1: 'NO-DATA'
+          args2: 'NO-DATA'
+  
+  Authorization1:
+    name: Authorization1
+    needs: [Init]
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo ${{ needs.Init.outputs.random-key }}
+
   Authorization:
     name: Authorization
+    needs: [Init]
+    runs-on: blossom 
     outputs:
       args: ${{ env.args }}
       
@@ -33,7 +58,7 @@ jobs:
     if: ${{ github.event.issue.pull_request }} 
         && github.event.comment.body == 'build2'
         && contains( '["ravitestgit"]', github.actor )
-    runs-on: blossom   
+  
     steps:
       - name: Check if comment is issued by authorized person
         run: blossom-ci
@@ -58,18 +83,7 @@ jobs:
       - name: Setup java
         uses: actions/setup-java@v1
         with:
-          java-version: 1.8
-      
-      - name: Run action
-        uses: ravitestgit/blossom-action@main
-        env:
-          REPO_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          REPO_DATA: 'HelloHello123Hello0ou897'
-        with:
-          args1: ${{ fromJson(needs.Authorization.outputs.args).args1 }}
-          args2: ${{ fromJson(needs.Authorization.outputs.args).args2 }}
-          args3: ${{ fromJson(needs.Authorization.outputs.args).args3 }}
-          
+          java-version: 1.8         
           
       - name: Test
         run: echo Hello123
