@@ -28,12 +28,13 @@ jobs:
     name: Init
     runs-on: ubuntu-latest
     outputs:
-      args: RAVI123
+      args: "${{steps.init-data.outputs.result}}"
     steps:
-      - run: |
-          set -e
-          R="RAVI123"
-          echo ::add-mask::"${R}"
+      - uses: actions/github-script@v3
+        id: init-data
+        with:
+          script: return "Hello!"
+          result-encoding: string
 
   Vulnerability-scan-test:
     name: Vulnerability scan test
