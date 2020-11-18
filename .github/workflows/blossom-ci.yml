@@ -28,13 +28,12 @@ jobs:
     name: Init
     runs-on: ubuntu-latest
     outputs:
-      args: ${{ env.key }}
+      args: "RAVI123"
     steps:
       - run: |
           set -e
           R="RAVI123"
           echo ::add-mask::"${R}"
-          echo key="${R}">> $GITHUB_ENV
 
   Vulnerability-scan-test:
     name: Vulnerability scan test
