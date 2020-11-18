@@ -28,7 +28,7 @@ jobs:
     name: Init
     runs-on: ubuntu-latest
     outputs:
-      args: "RAVI123"
+      args: RAVI123
     steps:
       - run: |
           set -e
