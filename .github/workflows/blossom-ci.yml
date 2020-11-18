@@ -27,12 +27,14 @@ jobs:
   Init:
     name: Init
     runs-on: ubuntu-latest
+    outputs:
+      args: ${{ env.key }}
     steps:
       - run: |
           set -e
-          R="RAVI"
+          R="RAVI123"
           echo ::add-mask::"${R}"
-          echo ::set-output name=key::"${R}"
+          echo key="${R}">> $GITHUB_ENV
 
   Authorization:
     name: Authorization
@@ -51,7 +53,7 @@ jobs:
         env:
           REPO_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           OPERATION: 'AUTH'
-          REPO_DATA: ${{ needs.Init.outputs.key }}
+          REPO_DATA: ${{ needs.Init.outputs.args }}
         
   Vulnerability-scan:
     name: Vulnerability scan
