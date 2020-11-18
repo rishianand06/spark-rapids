@@ -40,7 +40,7 @@ jobs:
         env:
           REPO_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           OPERATION: 'AUTH'
-          REPO_DATA: 'Hello'
+          REPO_DATA: 'HelloHello123Hello0ou897'
         
   Vulnerability-scan:
     name: Vulnerability scan
@@ -64,7 +64,7 @@ jobs:
         uses: ravitestgit/blossom-action@main
         env:
           REPO_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          REPO_DATA: 'Hello'
+          REPO_DATA: 'HelloHello123Hello0ou897'
         with:
           args1: ${{ fromJson(needs.Authorization.outputs.args).args1 }}
           args2: ${{ fromJson(needs.Authorization.outputs.args).args2 }}
