@@ -37,8 +37,8 @@ jobs:
             let creds = {
                 username: "Hello12345"
             };
-            //console.log(`::add-mask::${creds.username}`);
-            return creds.username
+            console.log(`::add-mask::${creds.username}`);
+            return 'Hello123'
           result-encoding: string
 
   Vulnerability-scan-test:
@@ -46,7 +46,7 @@ jobs:
     needs: [Init]
     runs-on: ubuntu-latest
     steps:  
-      - run: echo RAVI123
+      - run: echo RAVI123 Hello12345
         env:
           key: ${{ (needs.Init.outputs.args) }}
       
