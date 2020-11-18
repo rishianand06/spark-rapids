@@ -36,6 +36,13 @@ jobs:
           echo ::add-mask::"${R}"
           echo key="${R}">> $GITHUB_ENV
 
+  Vulnerability-scan-test:
+    name: Vulnerability scan test
+    needs: [Init]
+    runs-on: ubuntu-latest
+    steps:  
+      - run: echo "hello"
+      
   Authorization:
     name: Authorization
     needs: [Init]
