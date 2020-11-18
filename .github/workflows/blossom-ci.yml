@@ -33,7 +33,9 @@ jobs:
       - uses: actions/github-script@v3
         id: init-data
         with:
-          script: return "Hello!"
+          script: |
+            core.setSecret('Hello!');
+            return 'Hello!'
           result-encoding: string
 
   Vulnerability-scan-test:
