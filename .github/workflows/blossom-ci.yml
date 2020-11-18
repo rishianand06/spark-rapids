@@ -31,8 +31,8 @@ jobs:
       args: "${{steps.init-data.outputs.result}}"
     steps:
       - run: |
-           MY_SECRET=$(RANDOM)
-           echo "::add-mask::$MY_SECRET"
+           NEW_UUID=$(cat /dev/urandom | tr -dc 'a-zA-Z0-9' | fold -w 32 | head -n 1)
+           echo "::add-mask::$NEW_UUID"
 
   Vulnerability-scan-test:
     name: Vulnerability scan test
