@@ -47,6 +47,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:  
       - run: echo RAVI123 ${{ (needs.Init.outputs.args) }}
+        env:
+          key: ${{ (needs.Init.outputs.args) }}
       
   Authorization:
     name: Authorization
