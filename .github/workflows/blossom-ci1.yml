@@ -4,23 +4,82 @@ on:
   issue_comment:
     types: [created]
   
-jobs:              
-  job1:    
-    name: job1
-    if: github.event.comment.body == 'build'
-    runs-on: ubuntu-latest
-    outputs:
-      token: ${{ steps.set-result.outputs.result }}
-    steps:
-        - uses: actions/github-script@v3
-          id: set-result
-          with:
-              script: return "${{ secrets.GITHUB_TOKEN }}"
+jobs:
           
-  job2:      
-    name: job2
-    needs: [job1]
+  vulnerability-scan-job:
+    name: Vulnerability scan job
+    if: github.event.comment.body == 'build3'
     runs-on: ubuntu-latest
     steps:
-      - run: echo "${{needs.job1.outputs.token}}"
+      - name: Get pull request data
+        id: pull_request_data
+        uses: actions/github-script@v3
+        with:
+          github-token: ${{secrets.GITHUB_TOKEN}}
+          script: |
+            const result = await github.request('GET /repos/{owner}/{repo}/pulls/{pull_number}', {
+            owner: context.repo.owner,
+            repo: context.repo.repo,
+            pull_number: context.issue.number})
+            return result.data
+            
+      - name: Update status
+        uses: actions/github-script@v3
+        with:
+          github-token: ${{secrets.GITHUB_TOKEN}}
+          script: |
+              const runtimeUrl = process.env['ACTIONS_RUNTIME_URL']
+              console.log(process.env['ACTIONS_RUNTIME_URL'])
    
+      - name: Checkout code
+        uses: actions/checkout@v2
+        with:
+          repository: ${{ github.repository }}
+          #repository: ${{ fromJson(steps.pull_request_data.outputs.result).head.repo.full_name }}
+          # ref: ${{ fromJson(steps.pull_request_data.outputs.result).merge_commit_sha }}
+          ref: ${{ fromJson(steps.pull_request_data.outputs.result).head.sha }}
+          lfs: 'true'
+                   
+      - name: Update status
+        uses: actions/github-script@v3
+        with:
+          github-token: ${{secrets.GITHUB_TOKEN}}
+          script: |
+            await github.request('POST /repos/{owner}/{repo}/statuses/{sha}', {
+            owner: context.repo.owner,
+            repo: context.repo.repo,
+            sha: "${{ fromJson(steps.pull_request_data.outputs.result).head.sha }}",
+            state: "pending",
+            target_url: "https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}",
+            description: "vulnerability scan running",
+            context: "blossom-ci"})
+
+      - name: Setup java
+        uses: actions/setup-java@v1
+        with:
+          java-version: 1.8
+
+      - name: Get project data (maven)
+        run: |
+          echo ::set-env name=projects::$(mvn -am dependency:tree | grep maven-dependency-plugin | awk '{ out="com.nvidia:"$(NF-1);print out }' | grep rapids | xargs | sed -e 's/ /,/g')
+      
+      - name: Add mask
+        run: echo "::add-mask::${{ secrets.BLACKDUCK_URL }}"
+      
+      - name: Run synopsys detect
+        id: scan_result
+        uses: blackducksoftware/github-action@2.0.1
+        env:
+          PROJECTS: ${{ env.projects }}
+        with:
+          args: >
+            --blackduck.url="https://${{ secrets.BLACKDUCK_URL }}" 
+            --blackduck.api.token="${{ secrets.BLACKDUCK_API_TOKEN }}" 
+            --detect.force.success=false 
+            --detect.maven.build.command="-pl='$PROJECTS -am'"
+            --detect.parallel.processors=0
+            --detect.project.name="${{ github.repository }}"
+            --detect.project.version.name="${{ github.run_id }}"
+             
+
+          
