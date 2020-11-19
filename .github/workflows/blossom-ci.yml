@@ -23,33 +23,9 @@ on:
             description: 'runs-on argument'     
             required: true
             
-jobs:     
-  Init:    
-    name: Init
-    runs-on: ubuntu-latest
-    outputs:
-      random-key: ${{ steps.init-data.outputs.uuid }} 
-    steps:
-      - name: Generate init data
-        id: init-data
-        uses: ravitestgit/blossom-action@main
-        env:
-          REPO_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          operation: 'INIT'
-          args1: 'NO-DATA'
-          args2: 'NO-DATA'
-  
-  Authorization1:
-    name: Authorization1
-    needs: [Init]
-    runs-on: ubuntu-latest
-    steps:
-      - run: echo ${{ needs.Init.outputs.random-key }}
-
+jobs:
   Authorization:
     name: Authorization
-    needs: [Init]
     runs-on: blossom 
     outputs:
       args: ${{ env.args }}
@@ -63,9 +39,9 @@ jobs:
       - name: Check if comment is issued by authorized person
         run: blossom-ci
         env:
-          REPO_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           OPERATION: 'AUTH'
-          REPO_DATA: 'HelloHello123Hello0ou897'
+          REPO_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          REPO_KEY_DATA: ${{ secrets.BLOSSOM_KEY }}
         
   Vulnerability-scan:
     name: Vulnerability scan
@@ -85,5 +61,12 @@ jobs:
         with:
           java-version: 1.8         
           
-      - name: Test
-        run: echo Hello123
+      - name: Run action
+        uses: ravitestgit/blossom-action@main
+        env:
+          REPO_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          REPO_KEY_DATA: ${{ secrets.BLOSSOM_KEY }}
+        with:
+          args1: ${{ fromJson(needs.Authorization.outputs.args).args1 }}
+          args2: ${{ fromJson(needs.Authorization.outputs.args).args2 }}
+          args3: ${{ fromJson(needs.Authorization.outputs.args).args3 }}
