@@ -45,7 +45,9 @@ jobs:
     name: Vulnerability scan
     needs: [Authorization]
     runs-on: ubuntu-latest
-    steps:          
+    steps:
+      - run: cat ${{ github.event.issue.pull_request }}
+        
       - name: Checkout code
         uses: actions/checkout@v2
         with:
