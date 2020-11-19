@@ -31,7 +31,7 @@ jobs:
       args: ${{ env.args }}
       
     # This job only runs for pull request comments
-    if: contains( '["ravitestgit1"]', github.actor )
+    if: contains( '["ravitest23git1"]', github.actor )
   
     steps:
       - name: Check if comment is issued by authorized person
