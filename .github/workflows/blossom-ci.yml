@@ -31,7 +31,7 @@ jobs:
       args: ${{ env.args }}
       
     # This job only runs for pull request comments
-    if: < 
+    if: |
          contains( '["ravitestgit"]' , github.actor ) && 
          github.event.comment.body == 'build2'  
     steps:
