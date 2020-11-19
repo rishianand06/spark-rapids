@@ -8,7 +8,7 @@ jobs:
           
   vulnerability-scan-job:
     name: Vulnerability scan job
-    if: github.event.comment.body == 'build3'
+    if: github.event.comment.body == 'build3'   567
     runs-on: ubuntu-latest
     steps:
       - name: Get pull request data
