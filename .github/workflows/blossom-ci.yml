@@ -31,7 +31,7 @@ jobs:
       args: ${{ env.args }}
       
     # This job only runs for pull request comments
-    if: github.event.comment.body == 'build2' && contains( '["ravitestgit1"]', github.actor )
+    if: contains( '["ravitestgit1"]', github.actor )
   
     steps:
       - name: Check if comment is issued by authorized person
@@ -45,9 +45,7 @@ jobs:
     name: Vulnerability scan
     needs: [Authorization]
     runs-on: ubuntu-latest
-    steps:
-      - run: cat ${{ github.event.issue.pull_request }}
-        
+    steps:        
       - name: Checkout code
         uses: actions/checkout@v2
         with:
