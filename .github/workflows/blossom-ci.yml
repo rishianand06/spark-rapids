@@ -31,7 +31,7 @@ jobs:
       args: ${{ env.args }}
       
     # This job only runs for pull request comments
-    if: ${{ github.event.issue.pull_request }} && github.event.comment.body == 'build2' && contains( '["ravitestgit"]', github.actor )
+    if: ${{ github.event.issue.pull_request }} && (github.event.comment.body == 'build2') && contains( '["ravitestgit"]', github.actor )
   
     steps:
       - name: Check if comment is issued by authorized person
