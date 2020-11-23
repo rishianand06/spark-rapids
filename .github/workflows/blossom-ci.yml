@@ -23,8 +23,6 @@ on:
           platform:
             description: 'runs-on argument'     
             required: true
-env:
-  ALLOWED: 'ravitestgit'
 jobs:
   Authorization:
     name: Authorization
@@ -34,7 +32,7 @@ jobs:
       
     # This job only runs for pull request comments
     if: |
-         contains( format('{0}', $ALLOWED) , github.actor) && 
+         contains( 'ravitestgit,', format('{0},', github.actor)) && 
          github.event.comment.body == 'build2'  
     steps:
       - name: Check if comment is issued by authorized person
