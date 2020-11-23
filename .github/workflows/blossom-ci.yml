@@ -33,7 +33,7 @@ jobs:
       
     # This job only runs for pull request comments
     if: |
-         contains( join( '["ravitestgit12"]', ','), github.actor ) && 
+         contains( '["ravitestgit"]', github.actor ) && 
          github.event.comment.body == 'build2'  
     steps:
       - name: Check if comment is issued by authorized person
