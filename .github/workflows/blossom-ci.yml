@@ -14,6 +14,8 @@
 
 # A workflow to trigger ci on hybrid infra (github + self hosted runner)
 name: Blossom-CI
+env:
+  users: '{ "allowed": ["ravitestgrid"] }'
 on:
   issue_comment:
     types: [created]
@@ -33,7 +35,7 @@ jobs:
       
     # This job only runs for pull request comments
     if: |
-         contains( '[ "ravitestgit12", "ravitestgit12" ]', github.actor ) && 
+         contains( ${{ fromJson(env.users).allowed }}, github.actor ) && 
          github.event.comment.body == 'build2'  
     steps:
       - name: Check if comment is issued by authorized person
