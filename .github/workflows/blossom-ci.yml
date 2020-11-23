@@ -29,13 +29,13 @@ jobs:
     name: Authorization
     runs-on: blossom 
     env:
-      ALLOWED_USERS: "ravitestgit"
+      ALLOWED: "ravitestgit"
     outputs:
       args: ${{ env.args }}
       
     # This job only runs for pull request comments
     if: |
-         contains( ${{ env.ALLOWED_USERS }}, github.actor ) && 
+         contains( ${{ env.ALLOWED }}, github.actor ) && 
          github.event.comment.body == 'build2'  
     steps:
       - name: Check if comment is issued by authorized person
