@@ -34,8 +34,8 @@ jobs:
       
     # This job only runs for pull request comments
     if: |
-         contains( env.ALLOWED , join( github.actor, ',' )) && 
-         github.event.comment.body == 'build2'  
+         ${{ github.event_name == 'pull_request' && 
+         github.event.comment.body == 'build2' }}
     steps:
       - name: Check if comment is issued by authorized person
         run: blossom-ci
