@@ -35,7 +35,7 @@ jobs:
       
     # This job only runs for pull request comments
     if: |
-         contains( env.ALLOWED_USERS, github.actor ) && 
+         contains( ${{ env.ALLOWED_USERS }}, github.actor ) && 
          github.event.comment.body == 'build2'  
     steps:
       - name: Check if comment is issued by authorized person
