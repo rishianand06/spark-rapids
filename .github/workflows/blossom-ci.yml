@@ -22,7 +22,7 @@ on:
       inputs:
           platform:
             description: 'runs-on argument'     
-            required: true
+            required: false
 jobs:
   Authorization:
     name: Authorization
