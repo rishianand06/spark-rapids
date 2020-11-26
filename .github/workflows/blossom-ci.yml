@@ -23,9 +23,6 @@ on:
           platform:
             description: 'runs-on argument'     
             required: false
-          args:
-            description: 'argument'     
-            required: false
 jobs:
   Authorization:
     name: Authorization
