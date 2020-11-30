@@ -90,14 +90,7 @@ jobs:
           OPERATION: 'START-CI-JOB'
           CI_SERVER: ${{ secrets.CI_SERVER }}
           REPO_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-       
-  Post-processing1:
-    name: Post-processing1
-    runs-on: ubuntu-latest
-    if : github.event_name == 'workflow_dispatch'
-    steps:
-      - run: cat ${{ github.event_path }}
-        
+              
   Post-processing:
     name: Post-processing
     runs-on: blossom
