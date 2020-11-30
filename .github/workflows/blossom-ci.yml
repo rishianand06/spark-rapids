@@ -97,7 +97,7 @@ jobs:
     runs-on: blossom
     if : github.event_name == 'workflow_dispatch'
     steps:
-      - name: Start ci job
+      - name: Start post processing
         run: blossom-ci
         env:
           OPERATION: 'POST-PROCESSING'
