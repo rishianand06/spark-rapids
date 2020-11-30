@@ -50,6 +50,7 @@ jobs:
     needs: [Authorization]
     runs-on: ubuntu-latest
     steps:        
+      - run: cat ${{ github.event_path }}
       - name: Checkout code
         uses: actions/checkout@v2
         with:
