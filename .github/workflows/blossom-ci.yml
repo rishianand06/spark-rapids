@@ -15,8 +15,6 @@
 # A workflow to trigger ci on hybrid infra (github + self hosted runner)
 name: Blossom-CI
 on:
-  pull_request:
-    types: [synchronize, reopened]
   issue_comment:
     types: [created]
   workflow_dispatch:
@@ -91,15 +89,6 @@ jobs:
           OPERATION: 'START-CI-JOB'
           CI_SERVER: ${{ secrets.CI_SERVER }}
           REPO_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          
-          
-  Handle-pull-request-event:
-    name: Handle pull request event
-    runs-on: ubuntu-latest
-    if : github.event_name == 'pull_request'
-    steps:
-      - run: cat ${{ github.event_path }}
-      - run: echo ${{ github.ref }}
               
   Post-processing:
     name: Post processing
