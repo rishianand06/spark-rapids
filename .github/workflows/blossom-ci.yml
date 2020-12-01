@@ -92,7 +92,7 @@ jobs:
           REPO_TOKEN: ${{ secrets.GITHUB_TOKEN }}
               
   Post-processing:
-    name: Post-processing
+    name: Post processing
     runs-on: blossom
     if : github.event_name == 'workflow_dispatch'
     steps:
