@@ -14,8 +14,9 @@
 
 # A workflow to trigger ci on hybrid infra (github + self hosted runner)
 name: Blossom-CI
-on:   
-  push:    
+on:
+  pull_request:
+    types: [synchronize, reopened]
   issue_comment:
     types: [created]
   workflow_dispatch:
