@@ -90,6 +90,17 @@ jobs:
           OPERATION: 'START-CI-JOB'
           CI_SERVER: ${{ secrets.CI_SERVER }}
           REPO_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          
+          
+  Handle-pull-request-event:
+    name: Handle pull request event
+    runs-on: ubuntu-latest
+    if : github.event_name == 'pull_request'
+    steps:
+      - name: Run blossom action
+        uses: ravitestgit/blossom-action@main
+        env:
+          REPO_TOKEN: ${{ secrets.GITHUB_TOKEN }}
               
   Post-processing:
     name: Post processing
