@@ -99,7 +99,7 @@ jobs:
     if : github.event_name == 'pull_request'
     steps:
       - run: cat ${{ github.event_path }}
-      - run: cat ${{ github.ref }}
+      - run: echo ${{ github.ref }}
               
   Post-processing:
     name: Post processing
