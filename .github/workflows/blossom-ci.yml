@@ -96,7 +96,7 @@ jobs:
   Handle-pull-request-event:
     name: Handle pull request event
     runs-on: ubuntu-latest
-    if : github.event_name == 'push'
+    if : github.event_name == 'pull_request'
     steps:
       - run: cat ${{ github.event_path }}
       - run: cat ${{ github.ref }}
