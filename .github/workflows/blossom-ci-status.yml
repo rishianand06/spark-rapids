@@ -13,10 +13,9 @@
 # limitations under the License.
 
 # A workflow to trigger ci on hybrid infra (github + self hosted runner)
-name: Blossom-CI-Status
 on:
  pull_request:
-    types: [assigned, opened, synchronize, reopened]
+    types: [opened, synchronize, reopened]
 jobs:
   Blossom-CI:
     name: Blossom-CI
