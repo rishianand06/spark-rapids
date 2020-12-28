@@ -16,7 +16,7 @@
 name: Blossom-CI-Status
 on:
  pull_request:
-    types: [opened, synchronize, reopened]
+    types: [synchronize, reopened]
 jobs:
   Blossom-CI1:
     name: Blossom-CI1
@@ -24,6 +24,7 @@ jobs:
     steps:
      - run: echo hello1
   Blossom-CI2:
+   
     name: Blossom-CI2
     runs-on: ubuntu-latest
     steps:
