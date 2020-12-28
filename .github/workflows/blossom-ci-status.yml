@@ -18,7 +18,10 @@ on:
  pull_request:
     types: [assigned, opened, synchronize, reopened]
 jobs:
-  Authorization:
-    name: Authorization
+  Blossom-CI:
+    name: Blossom-CI
     runs-on: ubuntu-latest
     steps:
+     - run: echo hello
+    
+    
