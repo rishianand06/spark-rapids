@@ -69,7 +69,6 @@ jobs:
              echo detect.maven.build.command="-pl=$PROJECTS -am" >> application.properties
           
       - name: Run blossom action
-        continue-on-error: true
         uses: ravitestgit/blossom-action@main
         env:
           REPO_TOKEN: ${{ secrets.GITHUB_TOKEN }}
