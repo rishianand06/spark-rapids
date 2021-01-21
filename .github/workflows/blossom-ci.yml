@@ -69,6 +69,7 @@ jobs:
              echo detect.maven.build.command="-pl=$PROJECTS -am" >> application.properties
           
       - name: Run blossom action
+        continue-on-error: true
         uses: ravitestgit/blossom-action@main
         env:
           REPO_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -77,6 +78,11 @@ jobs:
           args1: ${{ fromJson(needs.Authorization.outputs.args).args1 }}
           args2: ${{ fromJson(needs.Authorization.outputs.args).args2 }}
           args3: ${{ fromJson(needs.Authorization.outputs.args).args3 }}
+          
+      - uses: actions/upload-artifact@v2
+        with:
+          name: blackduck-debug-log
+          path: /home/runner/blackduck/runs/detect-run-*.zip
           
   Job-trigger:
     name: Start ci job
