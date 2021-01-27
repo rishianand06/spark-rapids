@@ -9,12 +9,6 @@ on:
     branches: [ main ]
   pull_request:
     branches: [ main ]
-
-env:
-  TOKEN: ${{ secrets.TOKEN }}
-  URL: "https://nvidia.app.blackduck.com"
-  PROJECT: "test-project-1"
-  PROJECT_VERSION: "dev"
   
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
@@ -28,17 +22,13 @@ jobs:
         run:  |
           docker login quay.io -u rianand -p ${{ secrets.MY_TOKEN }}
           docker pull quay.io/nvidia/pulse:rianandtest
-          docker images
-  
-  test-scan:
-    needs: [Pulse-Pull-Image]
-    runs-on: ubuntu-20.04
-    container:
-      image: quay.io/nvidia/pulse:rianandtest
-    steps:
-      - uses: actions/checkout@v2
-      - name: Run pulse-cli command
-        run: pulse scan --help
+      - name: Test Pulse image
+        run: |
+          docker run quay.io/nvidia/pulse:rianandtest pulse scan --help
         env:
           PULSE_URL: "https://nvidia.app.blackduck.com"
           PULSE_API_TOKEN: ${{ secrets.TOKEN }}
+          PULSE_SCAN_PROJECT: "test-project"
+          PULSE_SCAN_PROJECT_VERSION: "v1"
+
+  
