@@ -29,7 +29,6 @@ jobs:
           echo $GITHUB_WORKSPACE
           PROJECTS=$(mvn -am dependency:tree | grep maven-dependency-plugin | awk '{ out="com.nvidia:"$(NF-1);print out }' | grep rapids | xargs | sed -e 's/ /,/g')
           echo $PROJECTS
-          echo ($PROJECTS -am)
           echo detect.maven.build.command="-pl=$PROJECTS -am" >> application.properties
           echo $PWD
           sudo apt-get install locate
