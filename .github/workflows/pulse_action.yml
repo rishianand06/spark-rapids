@@ -28,8 +28,13 @@ jobs:
         run: |
           echo $GITHUB_WORKSPACE
           PROJECTS=$(mvn -am dependency:tree | grep maven-dependency-plugin | awk '{ out="com.nvidia:"$(NF-1);print out }' | grep rapids | xargs | sed -e 's/ /,/g')
+          echo $PROJECTS
+          echo ($PROJECTS -am)
           echo detect.maven.build.command="-pl=$PROJECTS -am" >> application.properties
-          docker run --rm -i -v ${PWD}:$GITHUB_WORKSPACE -w $GITHUB_WORKSPACE quay.io/nvidia/pulse:rianandtest pulse --log-level debug --api-token ${PULSE_API_TOKEN} scan --project ${PULSE_SCAN_PROJECT} --project-version ${PULSE_SCAN_PROJECT_VERSION} .
+          echo $PWD
+          sudo apt-get install locate
+          locate -i application.properties
+          docker run --rm -i -v ${PWD}:$GITHUB_WORKSPACE -w $GITHUB_WORKSPACE quay.io/nvidia/pulse:rianandtest pulse --log-level debug --api-token ${PULSE_API_TOKEN} scan --build --project ${PULSE_SCAN_PROJECT} --project-version ${PULSE_SCAN_PROJECT_VERSION} .
         env:
           PULSE_URL: "https://nvidia.app.blackduck.com"
           PULSE_API_TOKEN: ${{ secrets.TOKEN }}
