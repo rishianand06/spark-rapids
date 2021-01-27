@@ -23,8 +23,9 @@ jobs:
           docker login quay.io -u rianand -p ${{ secrets.MY_TOKEN }}
           docker pull quay.io/nvidia/pulse:rianandtest
       - name: Test Pulse image
+        
         run: |
-          docker run quay.io/nvidia/pulse:rianandtest pulse --api-token ${PULSE_API_TOKEN} scan --project ${PULSE_SCAN_PROJECT} --project-version ${PULSE_SCAN_PROJECT_VERSION} --help
+          docker run --rm -i -v ${PWD}:/workspace/source -w /workspace/source quay.io/nvidia/pulse:rianandtest pulse --api-token ${PULSE_API_TOKEN} scan --project ${PULSE_SCAN_PROJECT} --project-version ${PULSE_SCAN_PROJECT_VERSION} ./
         env:
           PULSE_URL: "https://nvidia.app.blackduck.com"
           PULSE_API_TOKEN: ${{ secrets.TOKEN }}
