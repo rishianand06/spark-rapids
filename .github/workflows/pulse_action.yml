@@ -35,8 +35,8 @@ jobs:
           echo detect.maven.build.command="-pl=$PROJECTS -am" >> ./artifacts/application.properties
           ls -la
           ls -la /artifacts
-          chmod a+w ./artifacts/
-          la -la
+          chmod o+w ./artifacts/
+          ls -la
           pwd
           ls -l
         
