@@ -50,6 +50,6 @@ jobs:
         uses: actions/upload-artifact@v2
         with: 
           name: assets-for-download
-          path: /src/artifacts/scan_reports
+          path: /artifacts/scan_reports
 
   
