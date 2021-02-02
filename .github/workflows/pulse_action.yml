@@ -49,6 +49,6 @@ jobs:
         uses: actions/upload-artifact@v2
         with: 
           name: assets-for-download
-          path: scan_reports
+          path: /src/artifacts/scan_reports
 
   
