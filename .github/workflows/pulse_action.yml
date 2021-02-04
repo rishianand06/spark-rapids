@@ -26,11 +26,10 @@ jobs:
         uses: actions/checkout@v2
       - name: Test Pulse image
         run: |
-          mkdir artifacts/
           PROJECTS=$(mvn -am dependency:tree | grep maven-dependency-plugin | awk '{ out="com.nvidia:"$(NF-1);print out }' | grep rapids | xargs | sed -e 's/ /,/g')    
-          echo detect.maven.build.command="-pl=$PROJECTS -am" >> ./artifacts/application.properties
-          chmod o+w ./artifacts/
-          docker run --rm -i -v $GITHUB_WORKSPACE:/src/ -w /src/artifacts/ quay.io/nvidia/pulse:rianand pulse --no-clean --log-level debug --api-token ${PULSE_API_TOKEN} scan --build --project ${PULSE_SCAN_PROJECT} --project-version ${PULSE_SCAN_PROJECT_VERSION} --vulnerability-report ./scan_reports --fail /src/
+          echo detect.maven.build.command="-pl=$PROJECTS -am" >> application.properties
+          chmod o+w $GITHUB_WORKSPACE
+          docker run --rm -i -v ${PWD}:$GITHUB_WORKSPACE -w $GITHUB_WORKSPACE quay.io/nvidia/pulse:rianand pulse --no-clean --log-level info --api-token ${PULSE_API_TOKEN} scan --build --project ${PULSE_SCAN_PROJECT} --project-version ${PULSE_SCAN_PROJECT_VERSION} --vulnerability-report ./scan_reports --fail .
           ls -l
         env:
           PULSE_API_TOKEN: ${{ secrets.TOKEN }}
@@ -40,6 +39,6 @@ jobs:
         uses: actions/upload-artifact@v2
         with: 
           name: assets-for-download
-          path: /scan_reports
+          path: scan_reports
 
   
